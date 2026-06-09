@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>REALM CRAWLERS</title>
-<link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap)" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
     --gold: #c9a84c; --gold-light: #f0d080; --gold-dim: #7a6030;
@@ -14,7 +14,6 @@
     --green: #3a8040; --green-light: #50b060;
     --enemy-color: #c04030; --shadow: rgba(0,0,0,0.7);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
@@ -32,6 +31,7 @@
     gap: 16px;
   }
 
+  /* ─── PANEL BASE ─── */
   .panel {
     background: var(--panel-bg);
     border: 2px solid var(--panel-border);
@@ -39,223 +39,71 @@
     position: relative;
     box-shadow: 0 4px 24px var(--shadow), inset 0 1px 0 rgba(201,168,76,0.1);
   }
-
-  .panel::before,
-  .panel::after {
-    content: '✦';
-    position: absolute;
-    color: var(--gold-dim);
-    font-size: 10px;
-    top: 4px;
-  }
-
-  .panel::before { left: 6px; }
-  .panel::after { right: 6px; }
-
+  .panel::before, .panel::after { content:'✦'; position:absolute; color:var(--gold-dim); font-size:10px; top:4px; }
+  .panel::before { left:6px; } .panel::after { right:6px; }
   .panel-title {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: var(--gold-light);
-    text-align: center;
-    text-transform: uppercase;
-    padding: 8px 16px 6px;
-    border-bottom: 1px solid var(--panel-border);
-    background: linear-gradient(to bottom, rgba(201,168,76,0.08), transparent);
-    position: relative;
+    font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:3px;
+    color:var(--gold-light); text-align:center; text-transform:uppercase;
+    padding:8px 16px 6px; border-bottom:1px solid var(--panel-border);
+    background:linear-gradient(to bottom,rgba(201,168,76,0.08),transparent); position:relative;
   }
+  .panel-title::before,.panel-title::after { content:'─'; color:var(--gold-dim); margin:0 8px; }
 
-  .panel-title::before,
-  .panel-title::after {
-    content: '─';
-    color: var(--gold-dim);
-    margin: 0 8px;
-  }
+  /* ─── LAYOUT ─── */
+  .main-col { display:flex; flex-direction:column; gap:12px; width:560px; flex-shrink:0; }
+  .side-col  { display:flex; flex-direction:column; gap:12px; width:250px; flex-shrink:0; }
 
-  .main-col {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 560px;
-    flex-shrink: 0;
-    animation: flicker 8s infinite;
-  }
-
-  .side-col {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 250px;
-    flex-shrink: 0;
-  }
-
-  .cycle-bar {
-    display: flex;
-    align-items: center;
-    height: 64px;
-    overflow: hidden;
-    border: 2px solid var(--panel-border);
-    border-radius: 4px;
-    position: relative;
-  }
-
-  .cycle-label {
-    background: #1e160a;
-    height: 100%;
-    width: 130px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Cinzel', serif;
-    font-size: 16px;
-    font-weight: 900;
-    color: var(--gold-light);
-    letter-spacing: 2px;
-    border-right: 2px solid var(--panel-border);
-    flex-shrink: 0;
-    gap: 2px;
-  }
-
-  .cycle-num {
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 2px;
-    font-weight: 600;
-  }
-
+  /* ─── CYCLE BAR ─── */
+  .cycle-bar { display:flex; align-items:center; height:64px; overflow:hidden; border:2px solid var(--panel-border); border-radius:4px; position:relative; }
+  .cycle-label { background:#1e160a; height:100%; width:130px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:16px; font-weight:900; color:var(--gold-light); letter-spacing:2px; border-right:2px solid var(--panel-border); flex-shrink:0; gap:2px; }
+  .cycle-num { font-size:11px; color:var(--text-dim); letter-spacing:2px; font-weight:600; }
   .cycle-sky {
-    flex: 1;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex:1; height:100%;
+    display:flex; align-items:center; justify-content:center;
     transition: background 0.8s ease;
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
-
-  .cycle-sky.morning  { background: linear-gradient(135deg,#5b8fc0 0%,#7eb5d8 25%,#f0d060 60%,#e8b830 100%); }
-  .cycle-sky.noon     { background: linear-gradient(135deg,#2080d0 0%,#40b0f0 30%,#f8f0a0 65%,#f0c830 100%); }
-  .cycle-sky.night    { background: linear-gradient(135deg,#0a0820 0%,#1a1040 40%,#2a1860 70%,#0a0420 100%); }
-  .cycle-sky.midnight { background: linear-gradient(135deg,#050310 0%,#0a0818 40%,#12102a 70%,#050210 100%); }
-
-  .sky-icon {
-    font-size: 30px;
-    filter: drop-shadow(0 0 8px rgba(255,248,200,0.8));
-    animation: pulse-sky 3s ease-in-out infinite;
-    position: relative;
-    z-index: 1;
-  }
-
-  .sky-stars {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  @keyframes pulse-sky {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-  }
-
+  .cycle-sky.morning  { background:linear-gradient(135deg,#5b8fc0 0%,#7eb5d8 25%,#f0d060 60%,#e8b830 100%); }
+  .cycle-sky.noon     { background:linear-gradient(135deg,#2080d0 0%,#40b0f0 30%,#f8f0a0 65%,#f0c830 100%); }
+  .cycle-sky.night    { background:linear-gradient(135deg,#0a0820 0%,#1a1040 40%,#2a1860 70%,#0a0420 100%); }
+  .cycle-sky.midnight { background:linear-gradient(135deg,#050310 0%,#0a0818 40%,#12102a 70%,#050210 100%); }
+  .sky-icon { font-size:30px; filter:drop-shadow(0 0 8px rgba(255,248,200,0.8)); animation:pulse-sky 3s ease-in-out infinite; position:relative; z-index:1; }
+  .sky-stars { position:absolute; inset:0; pointer-events:none; }
+  @keyframes pulse-sky { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
   .time-label {
-    background: #1e160a;
-    height: 100%;
-    width: 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    font-family: 'Cinzel', serif;
-    font-size: 15px;
-    font-weight: 900;
-    color: var(--gold-light);
-    letter-spacing: 2px;
-    border-left: 2px solid var(--panel-border);
-    flex-shrink: 0;
-    transition: color 0.4s;
+    background:#1e160a; height:100%; width:150px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:2px; font-family:'Cinzel',serif; font-size:15px; font-weight:900;
+    color:var(--gold-light); letter-spacing:2px; border-left:2px solid var(--panel-border);
+    flex-shrink:0; transition: color 0.4s;
   }
+  .time-sub { font-size:10px; color:var(--text-dim); letter-spacing:1px; font-weight:600; font-family:'Cinzel',serif; }
 
-  .time-sub {
-    font-size: 10px;
-    color: var(--text-dim);
-    letter-spacing: 1px;
-    font-weight: 600;
-    font-family: 'Cinzel', serif;
-  }
+  /* ─── TIMELINE ─── */
+  .timeline-panel { padding:10px 16px 12px; }
+  .timeline-title { font-family:'Cinzel',serif; font-size:10px; letter-spacing:3px; color:var(--text-dim); text-align:center; margin-bottom:8px; text-transform:uppercase; }
+  .timeline-track { display:flex; align-items:center; justify-content:space-between; }
+  .tl-node { display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .tl-node-label { font-family:'Cinzel',serif; font-size:12px; font-weight:700; letter-spacing:1px; padding:4px 10px; border-radius:2px; border:1px solid; cursor:default; transition:all 0.3s; }
+  .tl-node-label.active { background:linear-gradient(135deg,#d4880a,#c9a84c); color:#1a0e00; border-color:var(--gold-light); box-shadow:0 0 10px rgba(240,200,64,0.4); }
+  .tl-node-label.inactive { background:#2a2010; color:var(--text-dim); border-color:var(--panel-border); }
+  .tl-node-label.done { background:#1e1808; color:#5a4820; border-color:#3a2a10; }
+  .tl-node-sub { font-size:11px; color:var(--text-dim); }
+  .tl-arrow { color:var(--gold-dim); font-size:16px; flex:1; text-align:center; padding-bottom:18px; }
+  @keyframes pulse-sun { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
 
-  .timeline-panel { padding: 10px 16px 12px; }
+  /* ─── TIMELINE ─── */
+  .timeline-panel { padding:10px 16px 12px; }
+  .timeline-title { font-family:'Cinzel',serif; font-size:10px; letter-spacing:3px; color:var(--text-dim); text-align:center; margin-bottom:8px; text-transform:uppercase; }
+  .timeline-track { display:flex; align-items:center; justify-content:space-between; }
+  .tl-node { display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .tl-node-label { font-family:'Cinzel',serif; font-size:13px; font-weight:700; letter-spacing:1px; padding:4px 16px; border-radius:2px; border:1px solid; }
+  .tl-node-label.active { background:linear-gradient(135deg,#d4880a,#c9a84c); color:#1a0e00; border-color:var(--gold-light); box-shadow:0 0 10px rgba(240,200,64,0.4); }
+  .tl-node-label.inactive { background:#2a2010; color:var(--text-dim); border-color:var(--panel-border); }
+  .tl-node-sub { font-size:11px; color:var(--text-dim); }
+  .tl-arrow { color:var(--gold-dim); font-size:16px; flex:1; text-align:center; padding-bottom:18px; }
 
-  .timeline-title {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--text-dim);
-    text-align: center;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-  }
-
-  .timeline-track {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .tl-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .tl-node-label {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 4px 16px;
-    border-radius: 2px;
-    border: 1px solid;
-    cursor: default;
-    transition: all 0.3s;
-  }
-
-  .tl-node-label.active {
-    background: linear-gradient(135deg,#d4880a,#c9a84c);
-    color: #1a0e00;
-    border-color: var(--gold-light);
-    box-shadow: 0 0 10px rgba(240,200,64,0.4);
-  }
-
-  .tl-node-label.inactive {
-    background: #2a2010;
-    color: var(--text-dim);
-    border-color: var(--panel-border);
-  }
-
-  .tl-node-label.done {
-    background: #1e1808;
-    color: #5a4820;
-    border-color: #3a2a10;
-  }
-
-  .tl-node-sub {
-    font-size: 11px;
-    color: var(--text-dim);
-  }
-
-  .tl-arrow {
-    color: var(--gold-dim);
-    font-size: 16px;
-    flex: 1;
-    text-align: center;
-    padding-bottom: 18px;
-  }
-
+  /* ─── COMBAT CONTAINER ─── */
   .combat-container {
     border: 2px solid var(--panel-border);
     border-radius: 4px;
@@ -263,700 +111,254 @@
     box-shadow: 0 4px 24px var(--shadow);
     overflow: hidden;
   }
-
   .round-badge {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: var(--gold-light);
-    text-align: center;
-    padding: 8px;
-    background: linear-gradient(to bottom, rgba(201,168,76,0.15), rgba(201,168,76,0.04));
-    border-bottom: 1px solid var(--panel-border);
-    text-transform: uppercase;
+    font-family:'Cinzel',serif; font-size:13px; font-weight:700; letter-spacing:3px;
+    color:var(--gold-light); text-align:center; padding:8px;
+    background:linear-gradient(to bottom,rgba(201,168,76,0.15),rgba(201,168,76,0.04));
+    border-bottom:1px solid var(--panel-border); text-transform:uppercase;
   }
-
   .player-header {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    text-align: center;
-    padding: 6px;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--panel-border);
+    font-family:'Cinzel',serif; font-size:11px; font-weight:600; letter-spacing:2px;
+    color:var(--text-dim); text-align:center; padding:6px; text-transform:uppercase;
+    border-bottom:1px solid var(--panel-border);
     background: rgba(201,168,76,0.04);
   }
-
   .combat-grid {
-    display: grid;
-    grid-template-columns: 190px 1fr 90px;
-    gap: 0;
+    display:grid; grid-template-columns:190px 1fr 90px; gap:0;
   }
+  .combat-cell { border-right:1px solid var(--panel-border); padding:10px; }
+  .combat-cell:last-child { border-right:none; }
 
-  .combat-cell {
-    border-right: 1px solid var(--panel-border);
-    padding: 10px;
-  }
+  /* ─── KNIGHT CARD ─── */
+  .knight-card { display:flex; flex-direction:column; gap:5px; }
+  .knight-portrait { width:100%; height:110px; background:linear-gradient(160deg,#3a2810,#1a1008); border:1px solid var(--panel-border); border-radius:2px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+  .knight-silhouette { font-size:52px; opacity:0.9; }
+  .knight-portrait::after { content:''; position:absolute; bottom:0; left:0; right:0; height:30px; background:linear-gradient(to top,rgba(26,16,8,0.8),transparent); }
+  .knight-name { font-family:'Cinzel',serif; font-size:13px; font-weight:700; color:var(--gold-light); letter-spacing:1px; }
+  .knight-desc { font-size:10px; color:var(--text-dim); font-style:italic; line-height:1.4; margin-bottom:2px; }
 
-  .combat-cell:last-child { border-right: none; }
+  /* ─── STAT ROWS ─── */
+  .stat-row { display:grid; grid-template-columns:34px 1fr; align-items:center; gap:4px; padding:2px 0; }
+  .stat-label { font-family:'Cinzel',serif; font-size:10px; font-weight:700; letter-spacing:1px; color:var(--text-dim); text-transform:uppercase; text-align:right; }
+  .stat-controls { display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:3px; }
+  .stat-value-group { display:flex; align-items:center; gap:2px; }
+  .stat-btn { width:20px; height:20px; border-radius:3px; border:1px solid var(--gold-dim); background:#2a1a08; color:var(--gold-light); font-size:14px; font-weight:700; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; transition:background 0.15s,border-color 0.15s,transform 0.1s; flex-shrink:0; }
+  .stat-btn:hover { background:#3a2410; border-color:var(--gold-light); }
+  .stat-btn:active { transform:scale(0.88); }
+  .stat-btn.minus { color:#e08060; border-color:#7a3820; }
+  .stat-btn.minus:hover { background:#3a1808; border-color:#c05030; }
+  .stat-btn.plus  { color:#80d080; border-color:#2a6020; }
+  .stat-btn.plus:hover  { background:#183018; border-color:#50a040; }
+  .stat-display { font-family:'Cinzel',serif; font-size:13px; font-weight:700; color:var(--gold-light); min-width:22px; text-align:center; }
+  .stat-max { color:var(--text-dim); font-size:11px; }
+  .stat-sep { color:var(--text-dim); font-size:11px; }
+  .stat-display.flash { animation:stat-flash 0.25s ease; }
+  @keyframes stat-flash { 0%{color:#fff;transform:scale(1.3)} 100%{color:var(--gold-light);transform:scale(1)} }
 
-  .knight-card {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
+  /* Skill row */
+  .skill-row { margin-top:4px; padding:5px 6px; background:#1e1508; border:1px solid var(--panel-border); border-radius:3px; }
+  .skill-name { font-family:'Cinzel',serif; font-size:10px; font-weight:700; color:#d0b060; letter-spacing:1px; }
+  .skill-desc { font-size:10px; color:var(--text-dim); line-height:1.4; margin-top:1px; }
 
-  .knight-portrait {
-    width: 100%;
-    height: 110px;
-    background: linear-gradient(160deg,#3a2810,#1a1008);
-    border: 1px solid var(--panel-border);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
+  /* ─── ROLL AREA ─── */
+  .roll-area { display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:8px; padding:12px 8px; }
+  .dice-and-number { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; }
+  .rolled-number { font-family:'Cinzel',serif; font-size:52px; font-weight:900; color:var(--gold-light); text-shadow:0 0 18px rgba(240,208,80,0.55),0 2px 4px rgba(0,0,0,0.8); line-height:1; min-width:48px; text-align:center; }
+  .rolled-number.pop { animation:num-pop 0.35s cubic-bezier(0.22,1,0.36,1); }
+  @keyframes num-pop { 0%{transform:scale(0.5);opacity:0.4} 60%{transform:scale(1.25)} 100%{transform:scale(1);opacity:1} }
+  .roll-result { font-family:'Cinzel',serif; font-size:11px; font-weight:700; color:var(--gold-light); letter-spacing:1px; text-align:center; }
+  .hit-banner { background:linear-gradient(135deg,#2a4a1a,#1e3812); border:1px solid #4a8030; border-radius:2px; padding:4px 8px; font-size:12px; color:var(--green-light); text-align:center; line-height:1.4; width:100%; }
+  .divider { height:1px; background:linear-gradient(to right,transparent,var(--panel-border),transparent); margin:2px 0; }
+  .enemy-mini { display:flex; flex-direction:column; gap:3px; padding-top:4px; width:100%; }
+  .enemy-name-inline { font-family:'Cinzel',serif; font-size:12px; font-weight:700; color:var(--enemy-color); letter-spacing:1px; }
+  .enemy-stat-inline { font-size:11px; color:var(--text-main); line-height:1.5; }
+  .empty-cell { background:#1e1508; }
 
-  .knight-silhouette {
-    font-size: 52px;
-    opacity: 0.9;
-  }
+  /* ─── ACTION BAR ─── */
+  .action-bar { display:flex; align-items:center; justify-content:flex-end; padding:10px 14px; background:#1a1208; border-top:2px solid var(--panel-border); }
+  .btn-end-turn { font-family:'Cinzel',serif; font-size:12px; font-weight:700; letter-spacing:2px; color:#fff8f0; background:linear-gradient(135deg,#8a1a08,#c02810); border:2px solid #e04030; border-radius:3px; padding:8px 20px; cursor:pointer; text-transform:uppercase; transition:all 0.2s; box-shadow:0 2px 8px rgba(180,40,20,0.4); }
+  .btn-end-turn:hover { background:linear-gradient(135deg,#c02810,#e03818); box-shadow:0 0 14px rgba(200,50,30,0.6); transform:translateY(-1px); }
 
-  .knight-portrait::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: linear-gradient(to top, rgba(26,16,8,0.8), transparent);
-  }
-
-  .knight-name {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--gold-light);
-    letter-spacing: 1px;
-  }
-
-  .knight-desc {
-    font-size: 10px;
-    color: var(--text-dim);
-    font-style: italic;
-    line-height: 1.4;
-    margin-bottom: 2px;
-  }
-
-  .stat-row {
-    display: grid;
-    grid-template-columns: 34px 1fr;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 0;
-  }
-
-  .stat-label {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    text-align: right;
-  }
-
-  .stat-controls {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    gap: 3px;
-  }
-
-  .stat-value-group {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-  }
-
-  .stat-btn {
-    width: 20px;
-    height: 20px;
-    border-radius: 3px;
-    border: 1px solid var(--gold-dim);
-    background: #2a1a08;
-    color: var(--gold-light);
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: background 0.15s, border-color 0.15s, transform 0.1s;
-    flex-shrink: 0;
-  }
-
-  .stat-btn:hover {
-    background: #3a2410;
-    border-color: var(--gold-light);
-  }
-
-  .stat-btn:active {
-    transform: scale(0.88);
-  }
-
-  .stat-btn.minus {
-    color: #e08060;
-    border-color: #7a3820;
-  }
-
-  .stat-btn.minus:hover {
-    background: #3a1808;
-    border-color: #c05030;
-  }
-
-  .stat-btn.plus {
-    color: #80d080;
-    border-color: #2a6020;
-  }
-
-  .stat-btn.plus:hover {
-    background: #183018;
-    border-color: #50a040;
-  }
-
-  .stat-display {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--gold-light);
-    min-width: 22px;
-    text-align: center;
-  }
-
-  .stat-max,
-  .stat-sep {
-    color: var(--text-dim);
-    font-size: 11px;
-  }
-
-  .stat-display.flash {
-    animation: stat-flash 0.25s ease;
-  }
-
-  @keyframes stat-flash {
-    0% { color: #fff; transform: scale(1.3); }
-    100% { color: var(--gold-light); transform: scale(1); }
-  }
-
-  .skill-row {
-    margin-top: 4px;
-    padding: 5px 6px;
-    background: #1e1508;
-    border: 1px solid var(--panel-border);
-    border-radius: 3px;
-  }
-
-  .skill-name {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    font-weight: 700;
-    color: #d0b060;
-    letter-spacing: 1px;
-  }
-
-  .skill-desc {
-    font-size: 10px;
-    color: var(--text-dim);
-    line-height: 1.4;
-    margin-top: 1px;
-  }
-
-  .roll-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    padding: 12px 8px;
-  }
-
-  .dice-and-number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .rolled-number {
-    font-family: 'Cinzel', serif;
-    font-size: 52px;
-    font-weight: 900;
-    color: var(--gold-light);
-    text-shadow: 0 0 18px rgba(240,208,80,0.55), 0 2px 4px rgba(0,0,0,0.8);
-    line-height: 1;
-    min-width: 48px;
-    text-align: center;
-  }
-
-  .rolled-number.pop {
-    animation: num-pop 0.35s cubic-bezier(0.22,1,0.36,1);
-  }
-
-  @keyframes num-pop {
-    0% { transform: scale(0.5); opacity: 0.4; }
-    60% { transform: scale(1.25); }
-    100% { transform: scale(1); opacity: 1; }
-  }
-
-  .roll-result {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--gold-light);
-    letter-spacing: 1px;
-    text-align: center;
-  }
-
-  .divider {
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--panel-border), transparent);
-    margin: 2px 0;
-  }
-
-  .enemy-mini {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    padding-top: 4px;
-    width: 100%;
-  }
-
-  .enemy-name-inline {
-    font-family: 'Cinzel', serif;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--enemy-color);
-    letter-spacing: 1px;
-  }
-
-  .enemy-stat-inline {
-    font-size: 11px;
-    color: var(--text-main);
-    line-height: 1.5;
-  }
-
-  .empty-cell { background: #1e1508; }
-
-  .action-bar {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 10px 14px;
-    background: #1a1208;
-    border-top: 2px solid var(--panel-border);
-  }
-
-  .btn-end-turn {
-    font-family: 'Cinzel', serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #fff8f0;
-    background: linear-gradient(135deg,#8a1a08,#c02810);
-    border: 2px solid #e04030;
-    border-radius: 3px;
-    padding: 8px 20px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.2s;
-    box-shadow: 0 2px 8px rgba(180,40,20,0.4);
-  }
-
-  .btn-end-turn:hover {
-    background: linear-gradient(135deg,#c02810,#e03818);
-    box-shadow: 0 0 14px rgba(200,50,30,0.6);
-    transform: translateY(-1px);
-  }
-
-  .dice-scene {
-    width: 100px;
-    height: 100px;
-    perspective: 400px;
-    cursor: pointer;
-    margin: 4px auto;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cube {
-    width: 68px;
-    height: 68px;
-    position: relative;
-    transform-style: preserve-3d;
-    transform: rotateX(-22deg) rotateY(28deg);
-    transition: filter 0.15s;
-  }
-
-  .dice-scene:hover .cube { filter: brightness(1.2); }
-
-  .face {
-    position: absolute;
-    width: 68px;
-    height: 68px;
-    border: 2px solid #c9a84c;
-    border-radius: 9px;
-    box-sizing: border-box;
-  }
-
-  .face-front  { transform: translateZ(34px); background: #5a3414; }
-  .face-back   { transform: rotateY(180deg) translateZ(34px); background: #2a1608; border-color: #7a5020; }
-  .face-right  { transform: rotateY(90deg) translateZ(34px); background: #3a2008; border-color: #8a6028; }
-  .face-left   { transform: rotateY(-90deg) translateZ(34px); background: #3a2008; border-color: #7a5020; }
-  .face-top    { transform: rotateX(90deg) translateZ(34px); background: #6a3e18; border-color: #d0a050; }
-  .face-bottom { transform: rotateX(-90deg) translateZ(34px); background: #1e1006; border-color: #6a4010; }
-
+  /* ─── 3D DICE ─── */
+  .dice-scene { width:100px; height:100px; perspective:400px; cursor:pointer; margin:4px auto; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .cube { width:68px; height:68px; position:relative; transform-style:preserve-3d; transform:rotateX(-22deg) rotateY(28deg); transition:filter 0.15s; }
+  .dice-scene:hover .cube { filter:brightness(1.2); }
+  .face { position:absolute; width:68px; height:68px; border:2px solid #c9a84c; border-radius:9px; box-sizing:border-box; }
+  .face-front  { transform:translateZ(34px);                background:#5a3414; }
+  .face-back   { transform:rotateY(180deg) translateZ(34px); background:#2a1608; border-color:#7a5020; }
+  .face-right  { transform:rotateY(90deg)  translateZ(34px); background:#3a2008; border-color:#8a6028; }
+  .face-left   { transform:rotateY(-90deg) translateZ(34px); background:#3a2008; border-color:#7a5020; }
+  .face-top    { transform:rotateX(90deg)  translateZ(34px); background:#6a3e18; border-color:#d0a050; }
+  .face-bottom { transform:rotateX(-90deg) translateZ(34px); background:#1e1006; border-color:#6a4010; }
   @keyframes roll-tumble {
-    0%   { transform: rotateX(-22deg) rotateY(28deg); }
-    25%  { transform: rotateX(-200deg) rotateY(160deg) rotateZ(40deg); }
-    55%  { transform: rotateX(-420deg) rotateY(380deg) rotateZ(-20deg); }
-    80%  { transform: rotateX(-560deg) rotateY(480deg) rotateZ(10deg); }
-    100% { transform: rotateX(-22deg) rotateY(28deg); }
+    0%  { transform:rotateX(-22deg) rotateY(28deg); }
+    25% { transform:rotateX(-200deg) rotateY(160deg) rotateZ(40deg); }
+    55% { transform:rotateX(-420deg) rotateY(380deg) rotateZ(-20deg); }
+    80% { transform:rotateX(-560deg) rotateY(480deg) rotateZ(10deg); }
+    100%{ transform:rotateX(-22deg) rotateY(28deg); }
   }
+  .cube.rolling { animation:roll-tumble 0.75s cubic-bezier(0.25,0.46,0.45,0.94); }
 
-  .cube.rolling {
-    animation: roll-tumble 0.75s cubic-bezier(0.25,0.46,0.45,0.94);
-  }
+  /* ─── SIDE: PARTY ─── */
+  .party-list { padding:8px 10px 10px; display:flex; flex-direction:column; gap:6px; }
+  .party-member { display:flex; align-items:center; gap:8px; background:#2a1e0e; border:1px solid var(--panel-border); border-radius:3px; padding:6px 8px; transition:border-color 0.2s; }
+  .party-member:hover { border-color:var(--gold-dim); }
+  .member-avatar { width:34px; height:34px; border-radius:50%; border:2px solid var(--panel-border); background:linear-gradient(135deg,#3a2810,#1e1008); display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+  .member-info { flex:1; min-width:0; }
+  .member-name { font-family:'Cinzel',serif; font-size:11px; font-weight:600; color:var(--text-main); }
+  .member-subinfo { font-size:10px; color:var(--text-dim); }
+  .member-badge { font-family:'Cinzel',serif; font-size:9px; font-weight:700; letter-spacing:1px; padding:2px 6px; border-radius:2px; flex-shrink:0; text-transform:uppercase; }
+  .badge-active { background:var(--green); color:#c0ffb0; border:1px solid #60c050; }
+  .badge-next   { background:#2a3050; color:#a0b0e0; border:1px solid #4060a0; }
+  .badge-wait   { background:#2a2010; color:var(--text-dim); border:1px solid var(--panel-border); }
+  .member-remove { background:none; border:none; color:#7a3020; font-size:14px; cursor:pointer; padding:0 2px; flex-shrink:0; line-height:1; }
+  .member-remove:hover { color:#e05030; }
 
-  .party-list {
-    padding: 8px 10px 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .party-member {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #2a1e0e;
-    border: 1px solid var(--panel-border);
-    border-radius: 3px;
-    padding: 6px 8px;
-    transition: border-color 0.2s;
-  }
-
-  .party-member:hover { border-color: var(--gold-dim); }
-
-  .member-avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 2px solid var(--panel-border);
-    background: linear-gradient(135deg,#3a2810,#1e1008);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    flex-shrink: 0;
-  }
-
-  .member-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .member-name {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-main);
-  }
-
-  .member-subinfo {
-    font-size: 10px;
-    color: var(--text-dim);
-  }
-
-  .member-badge {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 2px 6px;
-    border-radius: 2px;
-    flex-shrink: 0;
-    text-transform: uppercase;
-  }
-
-  .badge-active { background: var(--green); color: #c0ffb0; border: 1px solid #60c050; }
-  .badge-next   { background: #2a3050; color: #a0b0e0; border: 1px solid #4060a0; }
-  .badge-wait   { background: #2a2010; color: var(--text-dim); border: 1px solid var(--panel-border); }
-
-  .member-remove {
-    background: none;
-    border: none;
-    color: #7a3020;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 0 2px;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-
-  .member-remove:hover { color: #e05030; }
-
-  .add-hero-wrap,
-  .add-item-wrap,
-  .add-quest-wrap,
-  .add-enemy-wrap {
-    position: relative;
-  }
-
-  .btn-add-hero,
-  .btn-add-item,
-  .btn-add-quest {
-    width: 100%;
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--gold-light);
-    background: linear-gradient(135deg,#2a1e08,#3a2810);
-    border: 1px dashed var(--gold-dim);
-    border-radius: 3px;
-    padding: 7px 12px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .btn-add-hero:hover,
-  .btn-add-item:hover,
-  .btn-add-quest:hover {
-    border-color: var(--gold-light);
-    background: linear-gradient(135deg,#3a2810,#4a3018);
-  }
-
-  .btn-add-hero .arrow,
-  .btn-add-item .arrow,
-  .btn-add-quest .arrow {
-    font-size: 10px;
-    transition: transform 0.2s;
-  }
-
-  .btn-add-hero.open .arrow,
-  .btn-add-item.open .arrow,
-  .btn-add-quest.open .arrow {
-    transform: rotate(180deg);
-  }
-
+  /* ─── ADD HERO BUTTON & DROPDOWN ─── */
+  .add-hero-wrap { position:relative; }
+  .btn-add-hero { width:100%; font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:2px; color:var(--gold-light); background:linear-gradient(135deg,#2a1e08,#3a2810); border:1px dashed var(--gold-dim); border-radius:3px; padding:7px 12px; cursor:pointer; text-transform:uppercase; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .btn-add-hero:hover { border-color:var(--gold-light); background:linear-gradient(135deg,#3a2810,#4a3018); }
+  .btn-add-hero .arrow { font-size:10px; transition:transform 0.2s; }
+  .btn-add-hero.open .arrow { transform:rotate(180deg); }
   .hero-dropdown {
-    display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    right: 0;
-    background: #2a1e0a;
-    border: 2px solid var(--panel-border);
-    border-radius: 4px;
-    z-index: 200;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.8);
-    overflow: hidden;
+    display:none; position:absolute; top:calc(100% + 4px); left:0; right:0;
+    background:#2a1e0a; border:2px solid var(--panel-border); border-radius:4px;
+    z-index:200; box-shadow:0 8px 24px rgba(0,0,0,0.8);
+    overflow:hidden;
+  }
+  .hero-dropdown.open { display:block; }
+  .hero-search { width:100%; background:#1a1208; border:none; border-bottom:1px solid var(--panel-border); padding:8px 10px; font-family:'Crimson Text',serif; font-size:13px; color:var(--text-main); outline:none; }
+  .hero-search::placeholder { color:var(--text-dim); }
+  .hero-options { max-height:220px; overflow-y:auto; }
+  .hero-option { display:flex; align-items:center; gap:8px; padding:7px 10px; cursor:pointer; border-bottom:1px solid rgba(74,53,16,0.4); transition:background 0.15s; }
+  .hero-option:last-child { border-bottom:none; }
+  .hero-option:hover { background:#3a2810; }
+  .hero-option.disabled { opacity:0.4; cursor:not-allowed; }
+  .hero-opt-icon { font-size:16px; width:24px; text-align:center; flex-shrink:0; }
+  .hero-opt-info { flex:1; min-width:0; }
+  .hero-opt-name { font-family:'Cinzel',serif; font-size:11px; font-weight:600; color:var(--gold-light); }
+  .hero-opt-type { font-size:10px; color:var(--text-dim); }
+  .hero-opt-added { font-size:9px; color:var(--green-light); padding:2px 5px; background:#1a3010; border-radius:2px; border:1px solid #3a6020; flex-shrink:0; }
+
+  /* ─── SIDE: ENEMIES ─── */
+  .enemy-list { padding:6px 10px 10px; display:flex; flex-direction:column; gap:6px; }
+  .enemy-card { display:flex; align-items:center; gap:8px; background:#2a1008; border:1px solid #5a2010; border-radius:3px; padding:6px 8px; }
+  .enemy-avatar { width:34px; height:34px; border-radius:50%; border:2px solid #5a2010; background:linear-gradient(135deg,#4a1808,#1e0808); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .enemy-info { flex:1; min-width:0; }
+  .enemy-name-card { font-family:'Cinzel',serif; font-size:11px; font-weight:600; color:#e08060; }
+  .enemy-stats-card { font-size:11px; color:var(--text-dim); }
+  .badge-damaged { font-family:'Cinzel',serif; font-size:9px; font-weight:700; letter-spacing:1px; padding:2px 6px; border-radius:2px; background:#5a1010; color:#ffa090; border:1px solid #a03020; text-transform:uppercase; flex-shrink:0; }
+  .hp-bar-wrap { height:4px; background:#1a0a04; border-radius:2px; margin-top:3px; overflow:hidden; }
+  .hp-bar-fill { height:100%; border-radius:2px; background:linear-gradient(to right,#d04020,#e08030); transition:width 0.4s ease; }
+
+
+  /* ─── ITEM CARDS ─── */
+  .item-card { display:flex; align-items:flex-start; gap:8px; background:#1a1a08; border:1px solid #3a3510; border-radius:3px; padding:6px 8px; }
+  .item-info { flex:1; min-width:0; }
+  .item-name { font-family:'Cinzel',serif; font-size:11px; font-weight:600; color:var(--gold-light); }
+  .item-desc { font-size:10px; color:var(--text-dim); line-height:1.4; margin-top:1px; }
+  .badge-common   { font-family:'Cinzel',serif; font-size:9px; letter-spacing:1px; padding:1px 5px; border-radius:2px; text-transform:uppercase; background:#1e1a08; color:#c0a040; border:1px solid #5a4820; flex-shrink:0; }
+  .badge-complete { font-family:'Cinzel',serif; font-size:9px; letter-spacing:1px; padding:1px 5px; border-radius:2px; text-transform:uppercase; background:#0e1e18; color:#40c080; border:1px solid #206040; flex-shrink:0; }
+
+  /* ─── QUEST CARDS ─── */
+  .quest-card { display:flex; align-items:flex-start; gap:8px; background:#100c18; border:1px solid #302040; border-radius:3px; padding:6px 8px; transition:border-color 0.2s; }
+  .quest-card:hover { border-color:#6040a0; }
+  .quest-card.done { opacity:0.55; }
+  .quest-check { width:16px; height:16px; border-radius:3px; border:1px solid #604080; background:#1a1028; cursor:pointer; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; font-size:10px; color:#a070e0; transition:all 0.15s; }
+  .quest-check.checked { background:#4a2080; border-color:#9060d0; color:#e0c0ff; }
+  .quest-info { flex:1; min-width:0; }
+  .quest-name { font-family:'Cinzel',serif; font-size:10px; font-weight:700; color:#c0a0f0; line-height:1.4; }
+  .quest-desc { font-size:10px; color:var(--text-dim); line-height:1.4; margin-top:2px; }
+  .quest-reward { font-size:9px; color:#80d080; font-family:'Cinzel',serif; letter-spacing:1px; margin-top:3px; }
+  .badge-quest { font-family:'Cinzel',serif; font-size:9px; padding:1px 5px; border-radius:2px; text-transform:uppercase; background:#1a1028; color:#9060d0; border:1px solid #402860; flex-shrink:0; }
+
+  /* Scanlines */
+  body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:100; }
+  @keyframes flicker { 0%,100%{opacity:1} 92%{opacity:0.97} 94%{opacity:0.88} 96%{opacity:0.97} }
+  .main-col { animation:flicker 8s infinite; }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 900px){
+  body{
+    flex-direction:column;
+    padding:10px;
+    align-items:stretch;
   }
 
-  .hero-dropdown.open { display: block; }
-
-  .hero-search {
-    width: 100%;
-    background: #1a1208;
-    border: none;
-    border-bottom: 1px solid var(--panel-border);
-    padding: 8px 10px;
-    font-family: 'Crimson Text', serif;
-    font-size: 13px;
-    color: var(--text-main);
-    outline: none;
+  .main-col,
+  .side-col{
+    width:100%;
+    max-width:100%;
   }
 
-  .hero-search::placeholder { color: var(--text-dim); }
-
-  .hero-options {
-    max-height: 220px;
-    overflow-y: auto;
+  .combat-grid{
+    grid-template-columns:1fr;
   }
 
-  .hero-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 10px;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(74,53,16,0.4);
-    transition: background 0.15s;
+  .combat-cell{
+    border-right:none;
+    border-bottom:1px solid var(--panel-border);
   }
 
-  .hero-option:last-child { border-bottom: none; }
-  .hero-option:hover { background: #3a2810; }
-  .hero-option.disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .hero-opt-icon {
-    font-size: 16px;
-    width: 24px;
-    text-align: center;
-    flex-shrink: 0;
+  .empty-cell{
+    display:none;
   }
 
-  .hero-opt-info {
-    flex: 1;
-    min-width: 0;
+  .cycle-label,
+  .time-label{
+    width:90px;
+    font-size:12px;
   }
 
-  .hero-opt-name {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--gold-light);
+  .timeline-track{
+    overflow-x:auto;
+    gap:8px;
+    justify-content:flex-start;
+    padding-bottom:6px;
   }
 
-  .hero-opt-type {
-    font-size: 10px;
-    color: var(--text-dim);
+  .tl-arrow{
+    flex:none;
+    padding-bottom:0;
   }
 
-  .hero-opt-added {
-    font-size: 9px;
-    color: var(--green-light);
-    padding: 2px 5px;
-    background: #1a3010;
-    border-radius: 2px;
-    border: 1px solid #3a6020;
-    flex-shrink: 0;
+  .party-list,
+  .enemy-list{
+    max-height:300px;
+    overflow-y:auto;
   }
 
-  .enemy-list {
-    padding: 6px 10px 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  .btn-end-turn{
+    width:100%;
   }
 
-  .enemy-card {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #2a1008;
-    border: 1px solid #5a2010;
-    border-radius: 3px;
-    padding: 6px 8px;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
+  .action-bar{
+    justify-content:stretch;
   }
+}
 
-  .enemy-card:hover {
-    border-color: var(--gold-light);
-    background: rgba(201,168,76,0.05);
-  }
+/* Better touch controls */
+.stat-btn,
+.btn-end-turn,
+.btn-add-hero,
+#add-enemy-btn,
+.member-remove,
+.dice-scene{
+  touch-action:manipulation;
+}
 
-  .enemy-card.selected {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 1px rgba(201,168,76,0.2);
-  }
+html{
+  scroll-behavior:smooth;
+}
 
-  .enemy-avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 2px solid #5a2010;
-    background: linear-gradient(135deg,#4a1808,#1e0808);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .enemy-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .enemy-name-card {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    font-weight: 600;
-    color: #e08060;
-  }
-
-  .enemy-stats-card {
-    font-size: 11px;
-    color: var(--text-dim);
-  }
-
-  .badge-damaged {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 2px 6px;
-    border-radius: 2px;
-    background: #5a1010;
-    color: #ffa090;
-    border: 1px solid #a03020;
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
-
-  .hp-bar-wrap {
-    height: 4px;
-    background: #1a0a04;
-    border-radius: 2px;
-    margin-top: 3px;
-    overflow: hidden;
-  }
-
-  .hp-bar-fill {
-    height: 100%;
-    border-radius: 2px;
-    background: linear-gradient(to right,#d04020,#e08030);
-    transition: width 0.4s ease;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
-    pointer-events: none;
-    z-index: 100;
-  }
-
-  @keyframes flicker {
-    0%, 100% { opacity: 1; }
-    92% { opacity: 0.97; }
-    94% { opacity: 0.88; }
-    96% { opacity: 0.97; }
-  }
 </style>
 </head>
 <body>
 
+<!-- ══════════════ MAIN COLUMN ══════════════ -->
 <div class="main-col">
 
+  <!-- Cycle / Time Header -->
   <div class="cycle-bar">
     <div class="cycle-label">
       <span id="cycle-word">CYCLE</span>
@@ -972,16 +374,22 @@
     </div>
   </div>
 
+  <!-- Timeline -->
   <div class="panel timeline-panel">
-    <div class="timeline-title">Timeline - Cycle <span id="tl-cycle-num">1</span></div>
-    <div class="timeline-track" id="timeline-track"></div>
+    <div class="timeline-title">Timeline — Cycle <span id="tl-cycle-num">1</span></div>
+    <div class="timeline-track" id="timeline-track">
+      <!-- rendered by JS -->
+    </div>
   </div>
 
+  <!-- Combat Container -->
   <div class="combat-container">
     <div class="round-badge">⚔ Round 1 ⚔</div>
-    <div class="player-header" id="active-player-header">- Select a Hero -</div>
+    <div class="player-header" id="active-player-header">— Select a Hero —</div>
 
     <div class="combat-grid">
+
+      <!-- Hero Card -->
       <div class="combat-cell knight-card" id="hero-card">
         <div class="knight-portrait">
           <div class="knight-silhouette" id="hero-icon">⚔️</div>
@@ -989,95 +397,108 @@
         <div class="knight-name" id="hero-name">NO HERO</div>
         <div class="knight-desc" id="hero-desc">Select a hero from the party list to begin.</div>
 
+        <!-- HP -->
         <div class="stat-row">
           <span class="stat-label">HP</span>
           <div class="stat-controls">
             <div class="stat-value-group">
-              <span class="stat-display" id="stat-hp">-</span>
+              <span class="stat-display" id="stat-hp">—</span>
               <span class="stat-sep">/</span>
-              <span class="stat-display stat-max" id="stat-hp-max">-</span>
+              <span class="stat-display stat-max" id="stat-hp-max">—</span>
             </div>
-            <button class="stat-btn minus" data-stat="hp" data-delta="-1">-</button>
-            <button class="stat-btn plus" data-stat="hp" data-delta="1">+</button>
+            <button class="stat-btn minus" data-stat="hp" data-delta="-1">−</button>
+            <button class="stat-btn plus"  data-stat="hp" data-delta="1">+</button>
           </div>
         </div>
-
+        <!-- AC -->
         <div class="stat-row">
           <span class="stat-label">AC</span>
           <div class="stat-controls">
-            <div class="stat-value-group"><span class="stat-display" id="stat-ac">-</span></div>
-            <button class="stat-btn minus" data-stat="ac" data-delta="-1">-</button>
-            <button class="stat-btn plus" data-stat="ac" data-delta="1">+</button>
+            <div class="stat-value-group"><span class="stat-display" id="stat-ac">—</span></div>
+            <button class="stat-btn minus" data-stat="ac" data-delta="-1">−</button>
+            <button class="stat-btn plus"  data-stat="ac" data-delta="1">+</button>
           </div>
         </div>
-
+        <!-- DMG -->
         <div class="stat-row">
           <span class="stat-label">DMG</span>
           <div class="stat-controls">
-            <div class="stat-value-group"><span class="stat-display" id="stat-dmg">-</span></div>
-            <button class="stat-btn minus" data-stat="dmg" data-delta="-1">-</button>
-            <button class="stat-btn plus" data-stat="dmg" data-delta="1">+</button>
+            <div class="stat-value-group"><span class="stat-display" id="stat-dmg">—</span></div>
+            <button class="stat-btn minus" data-stat="dmg" data-delta="-1">−</button>
+            <button class="stat-btn plus"  data-stat="dmg" data-delta="1">+</button>
           </div>
         </div>
 
+        <!-- Skill -->
         <div class="skill-row" id="hero-skill-row">
-          <div class="skill-name" id="hero-skill-name">-</div>
-          <div class="skill-desc" id="hero-skill-desc">-</div>
+          <div class="skill-name" id="hero-skill-name">—</div>
+          <div class="skill-desc" id="hero-skill-desc">—</div>
         </div>
       </div>
 
+      <!-- Roll Area -->
       <div class="combat-cell roll-area">
         <div class="dice-and-number">
           <div class="dice-scene" id="dice-scene-btn" title="Click to roll" style="cursor:pointer">
             <div class="cube" id="main-cube">
               <div class="face face-front" id="face-front"></div>
-              <div class="face face-back" id="face-back"></div>
+              <div class="face face-back"  id="face-back"></div>
               <div class="face face-right" id="face-right"></div>
-              <div class="face face-left" id="face-left"></div>
-              <div class="face face-top" id="face-top"></div>
-              <div class="face face-bottom" id="face-bottom"></div>
+              <div class="face face-left"  id="face-left"></div>
+              <div class="face face-top"   id="face-top"></div>
+              <div class="face face-bottom"id="face-bottom"></div>
             </div>
           </div>
-          <div class="rolled-number" id="rolled-number">-</div>
+          <div class="rolled-number" id="rolled-number">—</div>
         </div>
-
         <div class="divider" style="width:100%;margin:4px 0;"></div>
         <div class="roll-result" id="main-roll-result">CLICK CUBE TO ROLL</div>
         <div class="divider" style="width:100%;margin:4px 0;"></div>
-
-        <div class="enemy-mini" id="enemy-mini">
-          <div style="font-size:11px;color:var(--text-dim);text-align:center;">No enemy selected</div>
+        <div class="enemy-mini">
+          <div><span class="enemy-name-inline">Enemy 1</span></div>
+          <div class="enemy-stat-inline">HP: <span style="color:#e08060">53/60</span></div>
+          <div class="enemy-stat-inline">AC: 13</div>
+          <div class="enemy-stat-inline">DMG: 13</div>
         </div>
       </div>
 
+      <!-- Empty 3rd col -->
       <div class="combat-cell empty-cell"></div>
     </div>
 
+    <!-- Action Bar -->
     <div class="action-bar">
       <button class="btn-end-turn" id="end-turn-btn">End Turn</button>
     </div>
   </div>
-</div>
 
+</div><!-- /main-col -->
+
+
+<!-- ══════════════ SIDE COLUMN ══════════════ -->
 <div class="side-col">
 
+  <!-- Players Panel -->
   <div class="panel">
     <div class="panel-title">Players</div>
-    <div class="party-list" id="party-list"></div>
+    <div class="party-list" id="party-list">
+      <!-- members injected by JS -->
+    </div>
     <div style="padding:0 10px 10px;">
       <div class="add-hero-wrap">
-        <button class="btn-add-hero" id="add-hero-btn">
+        <button class="btn-add-hero" id="add-hero-btn" id="add-hero-btn">
           <span>+ Add Hero</span>
           <span class="arrow">▼</span>
         </button>
         <div class="hero-dropdown" id="hero-dropdown">
-          <input class="hero-search" id="hero-search" type="text" placeholder="Search heroes..." autocomplete="off">
+          <input class="hero-search" id="hero-search" type="text" placeholder="Search heroes…" oninput="filterHeroes()" autocomplete="off">
           <div class="hero-options" id="hero-options"></div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Enemies Panel -->
   <div class="panel">
     <div class="panel-title" style="display:flex;align-items:center;justify-content:center;gap:8px;">
       <span>Enemies</span>
@@ -1085,174 +506,91 @@
     </div>
     <div style="position:relative;">
       <div class="hero-dropdown" id="enemy-dropdown">
-        <input class="hero-search" id="enemy-search" type="text" placeholder="Search enemies..." autocomplete="off">
+        <input class="hero-search" id="enemy-search" type="text" placeholder="Search enemies…" autocomplete="off">
         <div class="hero-options" id="enemy-options"></div>
       </div>
     </div>
-    <div class="enemy-list" id="enemy-list"></div>
+    <div class="enemy-list" id="enemy-list">
+      <!-- rendered by JS -->
+    </div>
   </div>
 
+
+  <!-- Items Panel -->
   <div class="panel">
-    <div class="panel-title">Items</div>
-    <div class="party-list" id="item-list">
-      <div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">Select a hero first</div>
+    <div class="panel-title" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+      <span>Items</span>
+      <button id="add-item-btn" title="Add Item" style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;width:22px;height:22px;border-radius:3px;border:1px solid var(--gold-dim);background:#2a1a08;color:var(--gold-light);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;flex-shrink:0;transition:all 0.15s;">+</button>
     </div>
-    <div style="padding:0 10px 10px;">
-      <div class="add-item-wrap">
-        <button class="btn-add-item" id="add-item-btn">
-          <span>+ Add Item</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="hero-dropdown" id="item-dropdown">
-          <input class="hero-search" id="item-search" type="text" placeholder="Search items..." autocomplete="off">
-          <div class="hero-options" id="item-options"></div>
-        </div>
+    <div style="position:relative;">
+      <div class="hero-dropdown" id="item-dropdown">
+        <input class="hero-search" id="item-search" type="text" placeholder="Search items…" autocomplete="off">
+        <div class="hero-options" id="item-options"></div>
       </div>
     </div>
+    <div class="enemy-list" id="item-list"></div>
   </div>
 
+  <!-- Quests Panel -->
   <div class="panel">
-    <div class="panel-title">Quests</div>
-    <div class="party-list" id="quest-list">
-      <div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">Select a hero first</div>
+    <div class="panel-title" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+      <span>Quests</span>
+      <button id="add-quest-btn" title="Add Quest" style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;width:22px;height:22px;border-radius:3px;border:1px solid var(--gold-dim);background:#2a1a08;color:#c0a0f0;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;flex-shrink:0;transition:all 0.15s;">+</button>
     </div>
-    <div style="padding:0 10px 10px;">
-      <div class="add-quest-wrap">
-        <button class="btn-add-quest" id="add-quest-btn">
-          <span>+ Add Quest</span>
-          <span class="arrow">▼</span>
-        </button>
-        <div class="hero-dropdown" id="quest-dropdown">
-          <input class="hero-search" id="quest-search" type="text" placeholder="Search quests..." autocomplete="off">
-          <div class="hero-options" id="quest-options"></div>
-        </div>
+    <div style="position:relative;">
+      <div class="hero-dropdown" id="quest-dropdown">
+        <input class="hero-search" id="quest-search" type="text" placeholder="Search quests…" autocomplete="off">
+        <div class="hero-options" id="quest-options"></div>
       </div>
     </div>
+    <div class="enemy-list" id="quest-list"></div>
   </div>
 
-</div>
+</div><!-- /side-col -->
 
 <script>
 // ══════ HERO DATA ══════
 const HEROES = [
-  { id:'lam-ang',    name:'Lam-Ang',    icon:'🦅', type:'Melee', desc:'Beast Master',      hp:12, ac:2, dmg:3, skill:'Hog and Bird',    skillDesc:'Draws 2 Cards Always' },
-  { id:'humadapnon', name:'Humadapnon', icon:'🧭', type:'Melee', desc:'Skilled Navigator', hp:10, ac:2, dmg:2, skill:'Traverser',       skillDesc:'Gain 2 Movement and Traverse Free Action' },
-  { id:'urduja',     name:'Urduja',     icon:'🏹', type:'Range', desc:'Warrior Princess',  hp:8,  ac:3, dmg:2, skill:'Double Tap',      skillDesc:'Roll 5 or 6 for Double DMG' },
-  { id:'babaylan',   name:'Babaylan',   icon:'🌿', type:'Range', desc:'Healer',            hp:6,  ac:2, dmg:1, skill:'Heal',            skillDesc:'Heal Target 5 HP' },
-  { id:'bantong',    name:'Bantong',    icon:'⚔️', type:'Melee', desc:'Lone Warrior',      hp:10, ac:2, dmg:2, skill:'Lone Wolf',       skillDesc:'When Alone, Add +1 AC and +1 DMG' },
-  { id:'bantugen',   name:'Bantugen',   icon:'🛡️', type:'Melee', desc:'Shield Knight',     hp:12, ac:1, dmg:2, skill:'Block',           skillDesc:'Roll Dice above DMG of attacker to Negate DMG' },
-  { id:'sondayo',    name:'Sondayo',    icon:'⚡', type:'Range', desc:'Caster',            hp:6,  ac:2, dmg:4, skill:'Lightning Strike', skillDesc:'Target any discovered tile. Deals 4 DMG to all units' },
-  { id:'handyong',   name:'Handyong',   icon:'👑', type:'Range', desc:'Leader',            hp:9,  ac:2, dmg:2, skill:'Raise Moral',     skillDesc:'Grants +2 AC and +2 DMG for 2 Turns per battle' },
-];
-
-// ══════ ITEM DATA ══════
-const ITEMS = [
-  { id:'food',            name:'Food',            type:'Common Item',   desc:'Heal Target for 2 HP' },
-  { id:'torch',           name:'Torch',           type:'Common Item',   desc:'Grant First turn against an enemy. removes after battle and can only be used at night.' },
-  { id:'whetstone',       name:'Whetstone',       type:'Common Item',   desc:'Grant Target +2 DMG' },
-  { id:'traverse-item',   name:'Traverse Item',   type:'Common Item',   desc:'Skips Traverse Action' },
-  { id:'cleanser',        name:'Cleanser',        type:'Common Item',   desc:'Removes Debuff' },
-  { id:'tinder-pouch',    name:'Tinder Pouch',    type:'Common Item',   desc:'Use to skip 2 turns. then heals full hp' },
-
-  { id:'tier1-boots',     name:'Tier 1 Boots',    type:'Complete Item', desc:'Grant +1 Tile Movement' },
-  { id:'tier1-armor',     name:'Tier 1 Armor',    type:'Complete Item', desc:'Grant +1 AC' },
-  { id:'tier1-sword',     name:'Tier 1 Sword',    type:'Complete Item', desc:'Grant +2 DMG' },
-  { id:'tier1-necklace',  name:'Tier 1 Necklace', type:'Complete Item', desc:'Grant +1 on Dice Roll' },
-  { id:'tier2-boots',     name:'Tier 2 Boots',    type:'Complete Item', desc:'Grant +2 Tile Movement' },
-  { id:'tier2-armor',     name:'Tier 2 Armor',    type:'Complete Item', desc:'Grant +2 AC' },
-  { id:'tier2-sword',     name:'Tier 2 Sword',    type:'Complete Item', desc:'Grant +3 DMG' },
-  { id:'tier2-necklace',  name:'Tier 2 Necklace', type:'Complete Item', desc:'Grant +1 Successful Roll 2 Times per Day' },
-];
-
-// ══════ QUEST DATA ══════
-const QUESTS = [
-  { id:'forest-hunt-day',       name:'Forest Hunt Quest',          desc:'Hunt and Defeat any monster at Day at any Forest Tile', reward:'10 Points' },
-  { id:'forest-hunt-night',     name:'Forest Hunt Quest Night',    desc:'Hunt and Defeat any monster at Night at any Forest Tile', reward:'10 Points' },
-  { id:'swamp-hunt-day',        name:'Swamp Hunt Quest',           desc:'Hunt and Defeat any monster at Day at any Swamp Tile', reward:'10 Points' },
-  { id:'swamp-hunt-night',      name:'Swamp Hunt Quest Night',     desc:'Hunt and Defeat any monster at Night at any Swamp Tile', reward:'10 Points' },
-  { id:'mountain-hunt-day',     name:'Mountain Hunt Quest',        desc:'Hunt and Defeat any monster at Day at any Mountain Tile', reward:'10 Points' },
-  { id:'mountain-hunt-night',   name:'Mountain Hunt Quest Night',  desc:'Hunt and Defeat any monster at Night at any Mountain Tile', reward:'10 Points' },
-
-  { id:'forest-gather-day',     name:'Forest Gather Quest',        desc:'Gather Quest Items by rolling a D5 - D6 at Day at any Forest Tile', reward:'10 Points' },
-  { id:'forest-gather-night',   name:'Forest Gather Quest Night',  desc:'Gather Quest Items by rolling a D5 - D6 at any Forest Tile at Night', reward:'10 Points' },
-  { id:'swamp-gather-day',      name:'Swamp Gather Quest',         desc:'Gather Quest Items by rolling a D5 - D6 at Day at any Swamp Tile', reward:'10 Points' },
-  { id:'swamp-gather-night',    name:'Swamp Gather Quest Night',   desc:'Gather Quest Items by rolling a D5 - D6 at Night at any Swamp Tile', reward:'10 Points' },
-  { id:'mountain-gather-day',   name:'Mountain Gather Quest',      desc:'Gather Quest Items by Rolling a D5 - D6 at Day at any Mountain Tile', reward:'10 Points' },
-  { id:'mountain-gather-night', name:'Mountain Gather Quest Night',desc:'Gather Quest Items by Rolling a D5 - D6 at Night at any Mountain Tile', reward:'10 Points' },
-
-  { id:'forest-find-day',       name:'Forest Find Quest',          desc:'Find a Quest item by Rolling a D6 on the same tile Twice at day on any Forest Tile and return back to the same village', reward:'10 Points' },
-  { id:'forest-find-night',     name:'Forest Find Quest Night',    desc:'Find a Quest item by Rolling a D6 on the same tile Twice at night on any Forest Tile and return back to the same village', reward:'10 Points' },
-  { id:'swamp-find-day',        name:'Swamp Find Quest',           desc:'Find a Quest item by Rolling a D6 on the same tile Twice at day on any Swamp Tile and return back to the same village', reward:'10 Points' },
-  { id:'swamp-find-night',      name:'Swamp Find Quest Night',     desc:'Find a Quest item by Rolling a D6 on the same tile Twice at night on any Swamp Tile and return back to the same village.', reward:'10 Points' },
-  { id:'mountain-find-day',     name:'Mountain Find Quest',        desc:'Find a Quest item by Rolling a D6 on the same tile Twice at day on any Mountain Tile and return back to the same village', reward:'10 Points' },
-  { id:'mountain-find-night',   name:'Mountain Find Quest Night',  desc:'Find a Quest item by Rolling a D6 on the same tile Twice at night on any Mountain Tile and return back to the same village', reward:'10 Points' },
+  { id:'lam-ang',      name:'Lam-Ang',      icon:'🦅', type:'Melee',  desc:'Beast Master',        hp:12, ac:2, dmg:3, skill:'Hog and Bird',    skillDesc:'Draws 2 Cards Always' },
+  { id:'humadapnon',   name:'Humadapnon',   icon:'🧭', type:'Melee',  desc:'Skilled Navigator',   hp:10, ac:2, dmg:2, skill:'Traverser',       skillDesc:'Gain 2 Movement and Traverse Free Action' },
+  { id:'urduja',       name:'Urduja',        icon:'🏹', type:'Range',  desc:'Warrior Princess',    hp:8,  ac:3, dmg:2, skill:'Double Tap',      skillDesc:'Roll 5 or 6 for Double DMG' },
+  { id:'babaylan',     name:'Babaylan',      icon:'🌿', type:'Range',  desc:'Healer',              hp:6,  ac:2, dmg:1, skill:'Heal',            skillDesc:'Heal Target 5 HP' },
+  { id:'bantong',      name:'Bantong',       icon:'⚔️', type:'Melee',  desc:'Lone Warrior',        hp:10, ac:2, dmg:2, skill:'Lone Wolf',       skillDesc:'When Alone, Add +1 AC and +1 DMG' },
+  { id:'bantugen',     name:'Bantugen',      icon:'🛡️', type:'Melee',  desc:'Shield Knight',       hp:12, ac:1, dmg:2, skill:'Block',           skillDesc:'Roll Dice above DMG of attacker to Negate DMG' },
+  { id:'sondayo',      name:'Sondayo',       icon:'⚡', type:'Range',  desc:'Caster',              hp:6,  ac:2, dmg:4, skill:'Lightning Strike', skillDesc:'Target any discovered tile. Deals 4 DMG to all units' },
+  { id:'handyong',     name:'Handyong',      icon:'👑', type:'Range',  desc:'Leader',              hp:9,  ac:2, dmg:2, skill:'Raise Moral',     skillDesc:'Grants +2 AC and +2 DMG for 2 Turns per battle' },
 ];
 
 // ══════ PARTY STATE ══════
-let party = [];
-let activeHeroId = null;
-let liveStats = {};
-let heroItems = {};
-let heroQuests = {};
-
-// ══════ ENEMY DATA ══════
-const ENEMIES = [
-  { id:'boa',         name:'Boa',         icon:'🐍', tier:'Tier 1', desc:'Giant Snake',     hp:6,  ac:2, dmg:1, behaviour:'This unit is revealed and able to attack normally.' },
-  { id:'wak-wak',     name:'Wak-Wak',     icon:'🦅', tier:'Tier 1', desc:'Vampire Eagle',   hp:7,  ac:3, dmg:2, behaviour:'Reduce AC by 1.' },
-  { id:'duwende',     name:'Duwende',     icon:'🧙', tier:'Tier 1', desc:'Little Dwarfs',   hp:3,  ac:0, dmg:0, behaviour:'Dice roll even numbers to reduce health by 1.' },
-  { id:'tiburones',   name:'Tiburones',   icon:'🐟', tier:'Tier 1', desc:'Flying Fishes',   hp:6,  ac:1, dmg:2, behaviour:'If the player is wounded or not in full HP, this unit attacks first.' },
-  { id:'tiyanak',     name:'Tiyanak',     icon:'👶', tier:'Tier 1', desc:'Baby Demon',      hp:5,  ac:2, dmg:3, behaviour:'Unable to attack or be attacked until player goes back to village.' },
-  { id:'berbalang',   name:'Berbalang',   icon:'👻', tier:'Tier 1', desc:'Ghouls',          hp:4,  ac:1, dmg:2, behaviour:'Unable to take the light, reduce HP by 1 per turn. If slain by the sun, no points.' },
-  { id:'tiktik',      name:'TikTik',      icon:'🦇', tier:'Tier 2', desc:'Bird-Like Human', hp:6,  ac:3, dmg:2, behaviour:'Dice roll more than 3 to reveal its nature. If fail, unable to attack.' },
-  { id:'magindara',   name:'Magindara',   icon:'🧜', tier:'Tier 2', desc:'Siren',           hp:10, ac:2, dmg:2, behaviour:'Behaviour Day 3.' },
-  { id:'kapre',       name:'Kapre',       icon:'🌲', tier:'Tier 2', desc:'Giant Lurker',    hp:16, ac:1, dmg:3, behaviour:'Behaviour Day 3.' },
-  { id:'mangkukulam', name:'Mangkukulam', icon:'🔮', tier:'Tier 2', desc:'Witch',           hp:9,  ac:2, dmg:3, behaviour:'Behaviour Day 3.' },
-  { id:'sigbin',      name:'Sigbin',      icon:'🐕', tier:'Tier 2', desc:'Demon Dog',       hp:8,  ac:2, dmg:3, behaviour:'Behaviour Day 3.' },
-  { id:'siyokoy',     name:'Siyokoy',     icon:'🦎', tier:'Tier 2', desc:'Humanoid Scales', hp:8,  ac:3, dmg:3, behaviour:'Behaviour Day 3.' },
-  { id:'pugot',       name:'Pugot',       icon:'💀', tier:'Tier 2', desc:'Headless Ghost',  hp:1,  ac:6, dmg:1, behaviour:'Behaviour Day 1.' },
-];
-
-// ══════ ENEMY STATE ══════
-let activeEnemies = [];
-let selectedEnemyIndex = null;
-let enemyInstanceCounter = 0;
+let party = [];           // array of hero ids in party
+let activeHeroId = null;  // which hero is shown in combat
+let liveStats = {};       // id -> { hp, ac, dmg }
 
 // ══════ PARTY RENDERING ══════
 function renderParty() {
   const list = document.getElementById('party-list');
   list.innerHTML = '';
-
   if (party.length === 0) {
     list.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">No heroes added yet</div>';
     return;
   }
-
-  const activeIndex = party.indexOf(activeHeroId);
-
   party.forEach((id, idx) => {
     const h = HEROES.find(x => x.id === id);
     const s = liveStats[id];
     const isActive = id === activeHeroId;
-    const nextIndex = activeIndex === -1 ? 0 : (activeIndex + 1) % party.length;
-    const badgeText = isActive ? 'Active' : idx === nextIndex ? 'Next' : 'Wait';
-    const badgeClass = isActive ? 'badge-active' : idx === nextIndex ? 'badge-next' : 'badge-wait';
-
     const div = document.createElement('div');
     div.className = 'party-member';
     div.style.cursor = 'pointer';
     if (isActive) div.style.borderColor = 'var(--gold)';
-
     div.innerHTML = `
       <div class="member-avatar">${h.icon}</div>
       <div class="member-info">
         <div class="member-name">${h.name}</div>
-        <div class="member-subinfo">${h.type} - ${h.desc}</div>
-        <div class="member-subinfo">HP ${s.hp}/${h.hp} - AC ${s.ac} - DMG ${s.dmg}</div>
+        <div class="member-subinfo">${h.type} · ${h.desc}</div>
+        <div class="member-subinfo">HP ${s.hp}/${h.hp} · AC ${s.ac} · DMG ${s.dmg}</div>
       </div>
-      <span class="member-badge ${badgeClass}">${badgeText}</span>
-      <button class="member-remove" onclick="removeHero('${id}', event)" title="Remove">✕</button>
-    `;
-
+      <span class="member-badge ${idx===0?'badge-active':idx===1?'badge-next':'badge-wait'}">${idx===0?'Active':idx===1?'Next':'Wait'}</span>
+      <button class="member-remove" onclick="removeHero('${id}',event)" title="Remove">✕</button>`;
     div.addEventListener('click', () => setActiveHero(id));
     list.appendChild(div);
   });
@@ -1262,72 +600,51 @@ function setActiveHero(id) {
   activeHeroId = id;
   const h = HEROES.find(x => x.id === id);
   const s = liveStats[id];
-
-  document.getElementById('active-player-header').textContent = `Player - ${h.name} (${h.type})`;
+  // Update combat panel
+  document.getElementById('active-player-header').textContent = `Player — ${h.name} (${h.type})`;
   document.getElementById('hero-icon').textContent = h.icon;
   document.getElementById('hero-name').textContent = h.name.toUpperCase();
-  document.getElementById('hero-desc').textContent = `${h.desc} - ${h.type}`;
-  document.getElementById('stat-hp').textContent = s.hp;
+  document.getElementById('hero-desc').textContent = `${h.desc} · ${h.type}`;
+  document.getElementById('stat-hp').textContent     = s.hp;
   document.getElementById('stat-hp-max').textContent = h.hp;
-  document.getElementById('stat-ac').textContent = s.ac;
-  document.getElementById('stat-dmg').textContent = s.dmg;
+  document.getElementById('stat-ac').textContent     = s.ac;
+  document.getElementById('stat-dmg').textContent    = s.dmg;
   document.getElementById('hero-skill-name').textContent = '⚡ ' + h.skill;
   document.getElementById('hero-skill-desc').textContent = h.skillDesc;
-
+  // HP colour
   const hpEl = document.getElementById('stat-hp');
   hpEl.style.color = s.hp <= 2 ? 'var(--red-light)' : s.hp <= 4 ? '#e0a040' : 'var(--gold-light)';
-
   renderParty();
-  renderHeroItems();
-  renderHeroQuests();
 }
 
 function removeHero(id, e) {
   e.stopPropagation();
   party = party.filter(x => x !== id);
-
-  delete liveStats[id];
-  delete heroItems[id];
-  delete heroQuests[id];
-
   if (activeHeroId === id) {
     activeHeroId = party[0] || null;
-    if (activeHeroId) {
-      setActiveHero(activeHeroId);
-    } else {
-      resetCombatPanel();
-    }
+    if (activeHeroId) setActiveHero(activeHeroId);
+    else resetCombatPanel();
   }
-
   renderParty();
   renderHeroOptions();
-
-  if (activeHeroId) {
-    renderHeroItems();
-    renderHeroQuests();
-  } else {
-    document.getElementById('item-list').innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">Select a hero first</div>';
-    document.getElementById('quest-list').innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">Select a hero first</div>';
-  }
 }
 
 function resetCombatPanel() {
-  document.getElementById('active-player-header').textContent = '- Select a Hero -';
+  document.getElementById('active-player-header').textContent = '— Select a Hero —';
   document.getElementById('hero-icon').textContent = '⚔️';
   document.getElementById('hero-name').textContent = 'NO HERO';
   document.getElementById('hero-desc').textContent = 'Select a hero from the party list to begin.';
-  ['stat-hp','stat-hp-max','stat-ac','stat-dmg'].forEach(id => document.getElementById(id).textContent = '-');
-  document.getElementById('hero-skill-name').textContent = '-';
-  document.getElementById('hero-skill-desc').textContent = '-';
+  ['stat-hp','stat-hp-max','stat-ac','stat-dmg'].forEach(id => document.getElementById(id).textContent = '—');
+  document.getElementById('hero-skill-name').textContent = '—';
+  document.getElementById('hero-skill-desc').textContent = '—';
 }
 
-// ══════ HERO DROPDOWN ══════
+// ══════ DROPDOWN ══════
 function toggleHeroDropdown() {
   const btn = document.getElementById('add-hero-btn');
-  const dd = document.getElementById('hero-dropdown');
+  const dd  = document.getElementById('hero-dropdown');
   const open = dd.classList.toggle('open');
   btn.classList.toggle('open', open);
-
   if (open) {
     renderHeroOptions();
     document.getElementById('hero-search').focus();
@@ -1335,293 +652,62 @@ function toggleHeroDropdown() {
   }
 }
 
-function renderHeroOptions(filter = '') {
+// dropdown close handled by delegated listener below
+
+function renderHeroOptions(filter='') {
   const container = document.getElementById('hero-options');
   container.innerHTML = '';
   const q = filter.toLowerCase();
-
   HEROES.forEach(h => {
     const match = h.name.toLowerCase().includes(q) || h.desc.toLowerCase().includes(q) || h.type.toLowerCase().includes(q);
     if (!match) return;
-
     const inParty = party.includes(h.id);
     const div = document.createElement('div');
     div.className = 'hero-option' + (inParty ? ' disabled' : '');
-
     div.innerHTML = `
       <div class="hero-opt-icon">${h.icon}</div>
       <div class="hero-opt-info">
         <div class="hero-opt-name">${h.name}</div>
-        <div class="hero-opt-type">${h.type} - ${h.desc} - HP ${h.hp} - AC ${h.ac} - DMG ${h.dmg}</div>
+        <div class="hero-opt-type">${h.type} · ${h.desc} · HP ${h.hp} · AC ${h.ac} · DMG ${h.dmg}</div>
       </div>
-      ${inParty ? '<span class="hero-opt-added">Added</span>' : ''}
-    `;
-
+      ${inParty ? '<span class="hero-opt-added">Added</span>' : ''}`;
     if (!inParty) {
       div.addEventListener('click', () => addHero(h.id));
     }
-
     container.appendChild(div);
   });
-
   if (container.innerHTML === '') {
     container.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--text-dim);text-align:center;">No heroes found</div>';
   }
 }
 
+function filterHeroes() {
+  renderHeroOptions(document.getElementById('hero-search').value);
+}
+
 function addHero(id) {
   if (party.includes(id)) return;
   const h = HEROES.find(x => x.id === id);
-
   liveStats[id] = { hp: h.hp, ac: h.ac, dmg: h.dmg };
-  heroItems[id] = [];
-  heroQuests[id] = [];
-
   party.push(id);
-
   if (!activeHeroId) setActiveHero(id);
-  else {
-    renderParty();
-    renderHeroItems();
-    renderHeroQuests();
-  }
-
+  else renderParty();
   renderHeroOptions(document.getElementById('hero-search').value);
-
+  // Close dropdown after a moment
   setTimeout(() => {
     document.getElementById('hero-dropdown').classList.remove('open');
     document.getElementById('add-hero-btn').classList.remove('open');
   }, 300);
 }
 
-// ══════ ITEM UI ══════
-function toggleItemDropdown() {
-  const btn = document.getElementById('add-item-btn');
-  const dd = document.getElementById('item-dropdown');
-  const open = dd.classList.toggle('open');
-  btn.classList.toggle('open', open);
-
-  if (open) {
-    renderItemOptions('');
-    document.getElementById('item-search').value = '';
-    document.getElementById('item-search').focus();
-  }
-}
-
-function renderItemOptions(filter = '') {
-  const container = document.getElementById('item-options');
-  container.innerHTML = '';
-  const q = filter.toLowerCase();
-
-  const filtered = ITEMS.filter(item =>
-    item.name.toLowerCase().includes(q) ||
-    item.type.toLowerCase().includes(q) ||
-    item.desc.toLowerCase().includes(q)
-  );
-
-  if (filtered.length === 0) {
-    container.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--text-dim);text-align:center;">No items found</div>';
-    return;
-  }
-
-  ['Common Item', 'Complete Item'].forEach(type => {
-    const group = filtered.filter(item => item.type === type);
-    if (group.length === 0) return;
-
-    const label = document.createElement('div');
-    label.style.cssText = 'padding:4px 10px 2px;font-family:Cinzel,serif;font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;background:#1a1008;border-bottom:1px solid var(--panel-border);';
-    label.textContent = type;
-    container.appendChild(label);
-
-    group.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'hero-option';
-
-      div.innerHTML = `
-        <div class="hero-opt-icon">🎒</div>
-        <div class="hero-opt-info">
-          <div class="hero-opt-name">${item.name}</div>
-          <div class="hero-opt-type">${item.desc}</div>
-        </div>
-      `;
-
-      div.addEventListener('click', () => addItemToHero(item.id));
-      container.appendChild(div);
-    });
-  });
-}
-
-function addItemToHero(itemId) {
-  if (!activeHeroId) return;
-  if (!heroItems[activeHeroId]) heroItems[activeHeroId] = [];
-  heroItems[activeHeroId].push(itemId);
-  renderHeroItems();
-  renderItemOptions(document.getElementById('item-search').value);
-
-  setTimeout(() => {
-    document.getElementById('item-dropdown').classList.remove('open');
-    document.getElementById('add-item-btn').classList.remove('open');
-  }, 250);
-}
-
-function removeItemFromHero(index, e) {
-  e.stopPropagation();
-  if (!activeHeroId) return;
-  heroItems[activeHeroId].splice(index, 1);
-  renderHeroItems();
-  renderItemOptions(document.getElementById('item-search').value);
-}
-
-function renderHeroItems() {
-  const list = document.getElementById('item-list');
-
-  if (!activeHeroId) {
-    list.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">Select a hero first</div>';
-    return;
-  }
-
-  const assigned = heroItems[activeHeroId] || [];
-
-  if (assigned.length === 0) {
-    list.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">No items assigned</div>';
-    return;
-  }
-
-  list.innerHTML = '';
-
-  assigned.forEach((itemId, index) => {
-    const item = ITEMS.find(x => x.id === itemId);
-    const card = document.createElement('div');
-    card.className = 'party-member';
-    card.innerHTML = `
-      <div class="member-avatar">🎒</div>
-      <div class="member-info">
-        <div class="member-name">${item.name}</div>
-        <div class="member-subinfo">${item.type}</div>
-        <div class="member-subinfo">${item.desc}</div>
-      </div>
-      <button class="member-remove" onclick="removeItemFromHero(${index}, event)" title="Remove">✕</button>
-    `;
-    list.appendChild(card);
-  });
-}
-
-// ══════ QUEST UI ══════
-function toggleQuestDropdown() {
-  const btn = document.getElementById('add-quest-btn');
-  const dd = document.getElementById('quest-dropdown');
-  const open = dd.classList.toggle('open');
-  btn.classList.toggle('open', open);
-
-  if (open) {
-    renderQuestOptions('');
-    document.getElementById('quest-search').value = '';
-    document.getElementById('quest-search').focus();
-  }
-}
-
-function renderQuestOptions(filter = '') {
-  const container = document.getElementById('quest-options');
-  container.innerHTML = '';
-  const q = filter.toLowerCase();
-
-  const filtered = QUESTS.filter(quest =>
-    quest.name.toLowerCase().includes(q) ||
-    quest.desc.toLowerCase().includes(q) ||
-    quest.reward.toLowerCase().includes(q)
-  );
-
-  if (filtered.length === 0) {
-    container.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--text-dim);text-align:center;">No quests found</div>';
-    return;
-  }
-
-  filtered.forEach(quest => {
-    const div = document.createElement('div');
-    div.className = 'hero-option';
-
-    div.innerHTML = `
-      <div class="hero-opt-icon">📜</div>
-      <div class="hero-opt-info">
-        <div class="hero-opt-name">${quest.name}</div>
-        <div class="hero-opt-type">${quest.desc} - ${quest.reward}</div>
-      </div>
-    `;
-
-    div.addEventListener('click', () => addQuestToHero(quest.id));
-    container.appendChild(div);
-  });
-}
-
-function addQuestToHero(questId) {
-  if (!activeHeroId) return;
-  if (!heroQuests[activeHeroId]) heroQuests[activeHeroId] = [];
-  heroQuests[activeHeroId].push(questId);
-  renderHeroQuests();
-  renderQuestOptions(document.getElementById('quest-search').value);
-
-  setTimeout(() => {
-    document.getElementById('quest-dropdown').classList.remove('open');
-    document.getElementById('add-quest-btn').classList.remove('open');
-  }, 250);
-}
-
-function removeQuestFromHero(index, e) {
-  e.stopPropagation();
-  if (!activeHeroId) return;
-  heroQuests[activeHeroId].splice(index, 1);
-  renderHeroQuests();
-  renderQuestOptions(document.getElementById('quest-search').value);
-}
-
-function renderHeroQuests() {
-  const list = document.getElementById('quest-list');
-
-  if (!activeHeroId) {
-    list.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">Select a hero first</div>';
-    return;
-  }
-
-  const assigned = heroQuests[activeHeroId] || [];
-
-  if (assigned.length === 0) {
-    list.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">No quests assigned</div>';
-    return;
-  }
-
-  list.innerHTML = '';
-
-  assigned.forEach((questId, index) => {
-    const q = QUESTS.find(x => x.id === questId);
-    const card = document.createElement('div');
-    card.className = 'party-member';
-    card.innerHTML = `
-      <div class="member-avatar">📜</div>
-      <div class="member-info">
-        <div class="member-name">${q.name}</div>
-        <div class="member-subinfo">${q.reward}</div>
-        <div class="member-subinfo">${q.desc}</div>
-      </div>
-      <button class="member-remove" onclick="removeQuestFromHero(${index}, event)" title="Remove">✕</button>
-    `;
-    list.appendChild(card);
-  });
-}
-
 // ══════ STAT CONTROLS ══════
-function flashEl(el) {
-  el.classList.remove('flash');
-  void el.offsetWidth;
-  el.classList.add('flash');
-}
+function flashEl(el) { el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
 
 function changeStat(key, delta) {
   if (!activeHeroId) return;
-
   const s = liveStats[activeHeroId];
   const h = HEROES.find(x => x.id === activeHeroId);
   let el;
-
   if (key === 'hp') {
     s.hp = Math.max(0, Math.min(h.hp, s.hp + delta));
     el = document.getElementById('stat-hp');
@@ -1639,8 +725,7 @@ function changeStat(key, delta) {
     el.textContent = s.dmg;
     flashEl(el);
   }
-
-  renderParty();
+  renderParty(); // update side panel stats
 }
 
 // ══════ 3D DICE ══════
@@ -1652,167 +737,104 @@ const DOT_POSITIONS = {
   5:[[25,25],[75,25],[50,50],[25,75],[75,75]],
   6:[[25,22],[75,22],[25,50],[75,50],[25,78],[75,78]]
 };
-
 function buildFace(faceEl, val) {
   faceEl.innerHTML = '';
-  const svg = document.createElementNS('[w3.org](http://www.w3.org/2000/svg)', 'svg');
-  svg.setAttribute('viewBox', '0 0 100 100');
-  svg.setAttribute('width', '68');
-  svg.setAttribute('height', '68');
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 100 100'); svg.setAttribute('width','68'); svg.setAttribute('height','68');
   svg.style.cssText = 'position:absolute;top:0;left:0;';
-
-  (DOT_POSITIONS[val] || []).forEach(([cx, cy]) => {
-    const c = document.createElementNS('[w3.org](http://www.w3.org/2000/svg)', 'circle');
-    c.setAttribute('cx', cx);
-    c.setAttribute('cy', cy);
-    c.setAttribute('r', '9');
-    c.setAttribute('fill', '#f0d080');
+  (DOT_POSITIONS[val]||[]).forEach(([cx,cy]) => {
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',cx); c.setAttribute('cy',cy); c.setAttribute('r','9'); c.setAttribute('fill','#f0d080');
     svg.appendChild(c);
   });
-
   faceEl.appendChild(svg);
 }
-
 function setCubeValue(val) {
-  buildFace(document.getElementById('face-front'), val);
-  buildFace(document.getElementById('face-back'), 7 - val);
-  buildFace(document.getElementById('face-top'), val === 1 ? 2 : (val === 6 ? 5 : 1));
-  buildFace(document.getElementById('face-bottom'), val === 1 ? 5 : (val === 6 ? 2 : 6));
-  buildFace(document.getElementById('face-right'), 3);
-  buildFace(document.getElementById('face-left'), 4);
+  buildFace(document.getElementById('face-front'),  val);
+  buildFace(document.getElementById('face-back'),   7-val);
+  buildFace(document.getElementById('face-top'),    val===1?2:(val===6?5:1));
+  buildFace(document.getElementById('face-bottom'), val===1?5:(val===6?2:6));
+  buildFace(document.getElementById('face-right'),  3);
+  buildFace(document.getElementById('face-left'),   4);
 }
-
 setCubeValue(1);
 
 function rollMainDie() {
   const cube = document.getElementById('main-cube');
   const result = document.getElementById('main-roll-result');
-
   if (cube.classList.contains('rolling')) return;
-
-  const final = Math.floor(Math.random() * 6) + 1;
+  const final = Math.floor(Math.random()*6)+1;
   setCubeValue(final);
   cube.classList.add('rolling');
-
   cube.addEventListener('animationend', () => {
     cube.classList.remove('rolling');
     cube.style.transform = '';
-
+    const ac = 13; const hit = final > ac;
+    result.textContent = 'ROLL '+(hit?'>':'≤')+' AC ('+final+' '+(hit?'>':'≤')+' '+ac+')';
+    result.style.color = hit ? 'var(--green-light)' : 'var(--red-light)';
     const numEl = document.getElementById('rolled-number');
     numEl.textContent = final;
-
-    if (!activeHeroId) {
-      result.textContent = 'Select a hero first';
-      result.style.color = 'var(--text-dim)';
-      numEl.style.color = 'var(--text-dim)';
-    } else {
-      const enemyState = getSelectedEnemy();
-
-      if (!enemyState) {
-        result.textContent = 'Add an enemy to attack';
-        result.style.color = 'var(--text-dim)';
-        numEl.style.color = 'var(--text-dim)';
-      } else {
-        const hero = HEROES.find(x => x.id === activeHeroId);
-        const stats = liveStats[activeHeroId];
-        const enemy = ENEMIES.find(x => x.id === enemyState.id);
-
-        const attackScore = final + Math.floor(stats.dmg / 2);
-        const hit = attackScore > enemy.ac + 1;
-        let damage = hit ? stats.dmg : 0;
-        let extra = '';
-
-        if (hit && hero.skill === 'Double Tap' && final >= 5) {
-          damage *= 2;
-          extra = ' - Double Tap!';
-        }
-
-        if (hit && hero.skill === 'Heal') {
-          stats.hp = Math.min(hero.hp, stats.hp + 2);
-          document.getElementById('stat-hp').textContent = stats.hp;
-          document.getElementById('stat-hp').style.color = stats.hp <= 2 ? 'var(--red-light)' : stats.hp <= 4 ? '#e0a040' : 'var(--gold-light)';
-        }
-
-        if (hit) {
-          enemyState.hp = Math.max(0, enemyState.hp - damage);
-        }
-
-        result.textContent = hit
-          ? `${hero.name} hits ${enemy.name} for ${damage} DMG${extra}`
-          : `${hero.name} misses ${enemy.name} with ${final}`;
-
-        result.style.color = hit ? 'var(--green-light)' : 'var(--red-light)';
-        numEl.style.color = result.style.color;
-
-        if (enemyState.hp === 0) {
-          result.textContent = `${enemy.name} defeated!`;
-          activeEnemies.splice(selectedEnemyIndex, 1);
-          selectedEnemyIndex = activeEnemies.length ? Math.min(selectedEnemyIndex, activeEnemies.length - 1) : null;
-        }
-
-        renderEnemyList();
-        if (activeHeroId) setActiveHero(activeHeroId);
-      }
-    }
-
-    numEl.classList.remove('pop');
-    void numEl.offsetWidth;
-    numEl.classList.add('pop');
-  }, { once: true });
+    numEl.style.color = hit ? 'var(--green-light)' : 'var(--red-light)';
+    numEl.classList.remove('pop'); void numEl.offsetWidth; numEl.classList.add('pop');
+  }, { once:true });
 }
+
+// Init
+renderParty();
+renderHeroOptions();
 
 // ══════ CYCLE / TIMELINE SYSTEM ══════
 const PHASES = [
-  { name:'MORNING',  icon:'☀️', skyClass:'morning',  sub:'Dawn breaks',   stars:false },
-  { name:'NOON',     icon:'🌞', skyClass:'noon',     sub:'High sun',      stars:false },
-  { name:'NIGHT',    icon:'🌙', skyClass:'night',    sub:'Darkness falls',stars:true  },
-  { name:'MIDNIGHT', icon:'⭐', skyClass:'midnight', sub:'Dead of night', stars:true  },
+  { name:'MORNING',  icon:'☀️',  skyClass:'morning',  sub:'Dawn breaks',    stars:false },
+  { name:'NOON',     icon:'🌞',  skyClass:'noon',     sub:'High sun',       stars:false },
+  { name:'NIGHT',    icon:'🌙',  skyClass:'night',    sub:'Darkness falls', stars:true  },
+  { name:'MIDNIGHT', icon:'⭐',  skyClass:'midnight', sub:'Dead of night',  stars:true  },
 ];
 
-let cycleNum = 1;
-let phaseIndex = 0;
-let roundNum = 1;
+let cycleNum   = 1;
+let phaseIndex = 0;   // 0=Morning 1=Noon 2=Night 3=Midnight
+let roundNum   = 1;
 
+// Star canvas
 const canvas = document.getElementById('sky-stars');
-const ctx = canvas.getContext('2d');
+const ctx    = canvas.getContext('2d');
 let stars = [];
-
 function makeStars() {
   stars = [];
   for (let i = 0; i < 40; i++) {
-    stars.push({ x: Math.random(), y: Math.random(), r: Math.random() * 1.2 + 0.3, a: Math.random() });
+    stars.push({ x: Math.random(), y: Math.random(), r: Math.random()*1.2+0.3, a: Math.random() });
   }
 }
-
 function drawStars() {
-  canvas.width = canvas.offsetWidth || 200;
+  canvas.width  = canvas.offsetWidth  || 200;
   canvas.height = canvas.offsetHeight || 64;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  ctx.clearRect(0,0,canvas.width,canvas.height);
   const phase = PHASES[phaseIndex];
   if (!phase.stars) return;
-
   stars.forEach(s => {
-    const twinkle = 0.5 + 0.5 * Math.sin(Date.now() / 600 + s.a * 10);
+    const twinkle = 0.5 + 0.5 * Math.sin(Date.now()/600 + s.a * 10);
     ctx.beginPath();
-    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI*2);
     ctx.fillStyle = `rgba(255,255,220,${0.4 + 0.6 * twinkle})`;
     ctx.fill();
   });
 }
-
 makeStars();
 setInterval(drawStars, 60);
 
 function renderCycleBar() {
   const p = PHASES[phaseIndex];
+  // Sky
   const sky = document.getElementById('cycle-sky');
   sky.className = 'cycle-sky ' + p.skyClass;
   document.getElementById('sky-icon').textContent = p.icon;
+  // Cycle label
   document.getElementById('cycle-num').textContent = cycleNum;
+  // Time label
   document.getElementById('time-word').textContent = p.name;
-  document.getElementById('time-sub').textContent = p.sub;
-
+  document.getElementById('time-sub').textContent  = p.sub;
+  // Round badge
+  document.getElementById('active-player-header') // just keep as-is
   const rb = document.querySelector('.round-badge');
   if (rb) rb.textContent = '⚔ Round ' + roundNum + ' ⚔';
 }
@@ -1821,19 +843,15 @@ function renderTimeline() {
   document.getElementById('tl-cycle-num').textContent = cycleNum;
   const track = document.getElementById('timeline-track');
   track.innerHTML = '';
-
   PHASES.forEach((p, i) => {
     const node = document.createElement('div');
     node.className = 'tl-node';
     const stateClass = i < phaseIndex ? 'done' : i === phaseIndex ? 'active' : 'inactive';
-    const checkmark = i < phaseIndex ? ' ✓' : '';
-
+    const checkmark  = i < phaseIndex ? ' ✓' : '';
     node.innerHTML = `
       <div class="tl-node-label ${stateClass}">${p.icon} ${p.name}${checkmark}</div>
-      <div class="tl-node-sub">Cycle ${cycleNum}</div>
-    `;
+      <div class="tl-node-sub">Cycle ${cycleNum}</div>`;
     track.appendChild(node);
-
     if (i < PHASES.length - 1) {
       const arrow = document.createElement('div');
       arrow.className = 'tl-arrow';
@@ -1846,60 +864,43 @@ function renderTimeline() {
 function endTurn() {
   roundNum++;
   phaseIndex++;
-
   if (phaseIndex >= PHASES.length) {
     phaseIndex = 0;
     cycleNum++;
-    makeStars();
+    makeStars(); // fresh star field each new cycle
   }
-
-  if (party.length > 0) {
-    const currentIndex = party.indexOf(activeHeroId);
-    const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % party.length;
-    setActiveHero(party[nextIndex]);
-  }
-
   renderCycleBar();
   renderTimeline();
-
+  // Flash the cycle bar for feedback
   const bar = document.querySelector('.cycle-bar');
   bar.style.transition = 'opacity 0.15s';
   bar.style.opacity = '0.4';
   setTimeout(() => { bar.style.opacity = '1'; }, 150);
 }
 
-// ══════ ENEMY UI ══════
-function getSelectedEnemy() {
-  if (!activeEnemies.length) return null;
-  if (selectedEnemyIndex === null || selectedEnemyIndex < 0 || selectedEnemyIndex >= activeEnemies.length) {
-    selectedEnemyIndex = 0;
-  }
-  return activeEnemies[selectedEnemyIndex];
-}
+// Initial render
+renderCycleBar();
+renderTimeline();
 
-function setSelectedEnemy(index) {
-  if (index < 0 || index >= activeEnemies.length) return;
-  selectedEnemyIndex = index;
-  renderEnemyList();
-}
+// ══════ ENEMY DATA ══════
+const ENEMIES = [
+  { id:'boa',         name:'Boa',         icon:'🐍', tier:'Tier 1', desc:'Giant Snake',       hp:6,  ac:2, dmg:1, behaviour:'This unit is revealed and able to attack normally.' },
+  { id:'wak-wak',     name:'Wak-Wak',     icon:'🦅', tier:'Tier 1', desc:'Vampire Eagle',     hp:7,  ac:3, dmg:2, behaviour:'Reduce AC by 1.' },
+  { id:'duwende',     name:'Duwende',     icon:'🧙', tier:'Tier 1', desc:'Little Dwarfs',     hp:3,  ac:0, dmg:0, behaviour:'Dice roll even numbers to reduce health by 1.' },
+  { id:'tiburones',   name:'Tiburones',   icon:'🐟', tier:'Tier 1', desc:'Flying Fishes',     hp:6,  ac:1, dmg:2, behaviour:'If the player is wounded or not in full HP, this unit attacks first.' },
+  { id:'tiyanak',     name:'Tiyanak',     icon:'👶', tier:'Tier 1', desc:'Baby Demon',        hp:5,  ac:2, dmg:3, behaviour:'Unable to attack or be attacked until player goes back to village.' },
+  { id:'berbalang',   name:'Berbalang',   icon:'👻', tier:'Tier 1', desc:'Ghouls',            hp:4,  ac:1, dmg:2, behaviour:'Unable to take the light, reduce HP by 1 per turn. If slain by the sun, no points.' },
+  { id:'tiktik',      name:'TikTik',      icon:'🦇', tier:'Tier 2', desc:'Bird-Like Human',   hp:6,  ac:3, dmg:2, behaviour:'Dice roll more than 3 to reveal its nature. If fail, unable to attack.' },
+  { id:'magindara',   name:'Magindara',   icon:'🧜', tier:'Tier 2', desc:'Siren',             hp:10, ac:2, dmg:2, behaviour:'Behaviour Day 3.' },
+  { id:'kapre',       name:'Kapre',       icon:'🌲', tier:'Tier 2', desc:'Giant Lurker',      hp:16, ac:1, dmg:3, behaviour:'Behaviour Day 3.' },
+  { id:'mangkukulam', name:'Mangkukulam', icon:'🔮', tier:'Tier 2', desc:'Witch',             hp:9,  ac:2, dmg:3, behaviour:'Behaviour Day 3.' },
+  { id:'sigbin',      name:'Sigbin',      icon:'🐕', tier:'Tier 2', desc:'Demon Dog',         hp:8,  ac:2, dmg:3, behaviour:'Behaviour Day 3.' },
+  { id:'siyokoy',     name:'Siyokoy',     icon:'🦎', tier:'Tier 2', desc:'Humanoid Scales',   hp:8,  ac:3, dmg:3, behaviour:'Behaviour Day 3.' },
+  { id:'pugot',       name:'Pugot',       icon:'💀', tier:'Tier 2', desc:'Headless Ghost',    hp:1,  ac:6, dmg:1, behaviour:'Behaviour Day 1.' },
+];
 
-function renderTargetEnemy() {
-  const target = document.getElementById('enemy-mini');
-  const selected = getSelectedEnemy();
-
-  if (!selected) {
-    target.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;">No enemy selected</div>';
-    return;
-  }
-
-  const enemy = ENEMIES.find(x => x.id === selected.id);
-  target.innerHTML = `
-    <div><span class="enemy-name-inline">${enemy.name}</span></div>
-    <div class="enemy-stat-inline">HP: <span style="color:#e08060">${selected.hp}/${enemy.hp}</span></div>
-    <div class="enemy-stat-inline">AC: ${enemy.ac}</div>
-    <div class="enemy-stat-inline">DMG: ${enemy.dmg}</div>
-  `;
-}
+// ══════ ENEMY PARTY STATE ══════
+let activeEnemies = []; // array of { id, hp } in current battle
 
 function getEnemyHpPercent(e) {
   const base = ENEMIES.find(x => x.id === e.id);
@@ -1909,27 +910,17 @@ function getEnemyHpPercent(e) {
 function renderEnemyList() {
   const list = document.getElementById('enemy-list');
   list.innerHTML = '';
-
   if (activeEnemies.length === 0) {
     list.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">No enemies added</div>';
-    renderTargetEnemy();
     return;
   }
-
-  activeEnemies.forEach((ae, idx) => {
+  activeEnemies.forEach(ae => {
     const e = ENEMIES.find(x => x.id === ae.id);
     const pct = getEnemyHpPercent(ae);
     const isDamaged = ae.hp < e.hp;
-    const isSelected = idx === selectedEnemyIndex;
-    const barColor = pct > 50
-      ? 'linear-gradient(to right,#d04020,#e08030)'
-      : pct > 25
-        ? 'linear-gradient(to right,#c03010,#d04010)'
-        : 'linear-gradient(to right,#800808,#b01010)';
-
+    const barColor = pct > 50 ? 'linear-gradient(to right,#d04020,#e08030)' : pct > 25 ? 'linear-gradient(to right,#c03010,#d04010)' : 'linear-gradient(to right,#800808,#b01010)';
     const card = document.createElement('div');
-    card.className = 'enemy-card' + (isSelected ? ' selected' : '');
-
+    card.className = 'enemy-card';
     card.innerHTML = `
       <div class="enemy-avatar">${e.icon}</div>
       <div class="enemy-info" style="flex:1;min-width:0;">
@@ -1937,64 +928,31 @@ function renderEnemyList() {
           <div class="enemy-name-card">${e.name}</div>
           ${isDamaged ? '<span class="badge-damaged">Damaged</span>' : ''}
         </div>
-        <div class="enemy-stats-card">${e.tier} - ${e.desc}</div>
-        <div class="enemy-stats-card">HP ${ae.hp}/${e.hp} - AC ${e.ac} - DMG ${e.dmg}</div>
+        <div class="enemy-stats-card">${e.tier} · ${e.desc}</div>
+        <div class="enemy-stats-card">HP ${ae.hp}/${e.hp} · AC ${e.ac} · DMG ${e.dmg}</div>
         <div class="hp-bar-wrap"><div class="hp-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
         <div style="font-size:9px;color:var(--text-dim);margin-top:2px;line-height:1.3;">${e.behaviour}</div>
       </div>
-      <button data-enemy-remove="${ae.instanceId}" title="Remove" style="background:none;border:none;color:#7a3020;font-size:14px;cursor:pointer;padding:0 2px;flex-shrink:0;align-self:flex-start;margin-top:2px;">✕</button>
-    `;
-
+      <button data-enemy-remove="${ae.id}" title="Remove" style="background:none;border:none;color:#7a3020;font-size:14px;cursor:pointer;padding:0 2px;flex-shrink:0;align-self:flex-start;margin-top:2px;">✕</button>`;
     list.appendChild(card);
-    card.addEventListener('click', () => setSelectedEnemy(idx));
-
-    const removeButton = card.querySelector('[data-enemy-remove]');
-    if (removeButton) {
-      removeButton.addEventListener('click', ev => {
-        ev.stopPropagation();
-        removeEnemy(removeButton.getAttribute('data-enemy-remove'));
-      });
-    }
   });
-
-  renderTargetEnemy();
 }
 
 function addEnemy(id) {
   const e = ENEMIES.find(x => x.id === id);
-  activeEnemies.push({
-    instanceId: ++enemyInstanceCounter,
-    id,
-    hp: e.hp
-  });
-
-  selectedEnemyIndex = activeEnemies.length - 1;
+  // Allow multiple of same enemy
+  activeEnemies.push({ id, hp: e.hp });
   renderEnemyList();
   renderEnemyOptions(document.getElementById('enemy-search').value);
-
   setTimeout(() => {
     document.getElementById('enemy-dropdown').classList.remove('open');
   }, 250);
 }
 
-function removeEnemy(instanceId) {
-  const idx = activeEnemies.findIndex(x => x.instanceId === Number(instanceId));
-  if (idx !== -1) {
-    activeEnemies.splice(idx, 1);
-
-    if (selectedEnemyIndex !== null) {
-      if (selectedEnemyIndex > idx) {
-        selectedEnemyIndex--;
-      } else if (selectedEnemyIndex >= activeEnemies.length) {
-        selectedEnemyIndex = activeEnemies.length - 1;
-      }
-
-      if (activeEnemies.length === 0) {
-        selectedEnemyIndex = null;
-      }
-    }
-  }
-
+function removeEnemy(id) {
+  // Remove only the first instance
+  const idx = activeEnemies.findIndex(x => x.id === id);
+  if (idx !== -1) activeEnemies.splice(idx, 1);
   renderEnemyList();
   renderEnemyOptions(document.getElementById('enemy-search').value);
 }
@@ -2004,7 +962,6 @@ function toggleEnemyDropdown() {
   const btn = document.getElementById('add-enemy-btn');
   const open = dd.classList.toggle('open');
   btn.style.borderColor = open ? 'var(--gold-light)' : 'var(--gold-dim)';
-
   if (open) {
     renderEnemyOptions('');
     document.getElementById('enemy-search').value = '';
@@ -2016,114 +973,303 @@ function renderEnemyOptions(filter) {
   const container = document.getElementById('enemy-options');
   container.innerHTML = '';
   const q = (filter || '').toLowerCase();
-
   const filtered = ENEMIES.filter(e =>
     e.name.toLowerCase().includes(q) ||
     e.desc.toLowerCase().includes(q) ||
     e.tier.toLowerCase().includes(q)
   );
-
   if (filtered.length === 0) {
     container.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--text-dim);text-align:center;">No enemies found</div>';
     return;
   }
-
-  ['Tier 1', 'Tier 2'].forEach(tier => {
+  // Group by tier
+  ['Tier 1','Tier 2'].forEach(tier => {
     const group = filtered.filter(e => e.tier === tier);
     if (group.length === 0) return;
-
     const label = document.createElement('div');
     label.style.cssText = 'padding:4px 10px 2px;font-family:Cinzel,serif;font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;background:#1a1008;border-bottom:1px solid var(--panel-border);';
     label.textContent = tier;
     container.appendChild(label);
-
     group.forEach(e => {
       const div = document.createElement('div');
       div.className = 'hero-option';
-
       div.innerHTML = `
         <div class="hero-opt-icon">${e.icon}</div>
         <div class="hero-opt-info">
           <div class="hero-opt-name">${e.name}</div>
-          <div class="hero-opt-type">${e.desc} - HP ${e.hp} - AC ${e.ac} - DMG ${e.dmg}</div>
-        </div>
-      `;
-
+          <div class="hero-opt-type">${e.desc} · HP ${e.hp} · AC ${e.ac} · DMG ${e.dmg}</div>
+        </div>`;
       div.addEventListener('click', () => addEnemy(e.id));
       container.appendChild(div);
     });
   });
 }
 
-// ══════ INPUTS / EVENTS ══════
+
 document.addEventListener('click', function(e) {
+  // Stat buttons
   const statBtn = e.target.closest('[data-stat]');
   if (statBtn) {
     changeStat(statBtn.getAttribute('data-stat'), parseInt(statBtn.getAttribute('data-delta'), 10));
     return;
   }
-
+  // Dice roll
   if (e.target.closest('#dice-scene-btn')) { rollMainDie(); return; }
+  // End Turn
   if (e.target.closest('#end-turn-btn')) { endTurn(); return; }
+  // Add Hero toggle
   if (e.target.closest('#add-hero-btn')) { toggleHeroDropdown(); return; }
+  // Add Enemy toggle
   if (e.target.closest('#add-enemy-btn')) { toggleEnemyDropdown(); return; }
-  if (e.target.closest('#add-item-btn')) { toggleItemDropdown(); return; }
-  if (e.target.closest('#add-quest-btn')) { toggleQuestDropdown(); return; }
-
+  // Remove enemy
   const removeEnBtn = e.target.closest('[data-enemy-remove]');
-  if (removeEnBtn) {
-    removeEnemy(removeEnBtn.getAttribute('data-enemy-remove'));
-    return;
-  }
-
-  if (
-    e.target.id === 'enemy-search' ||
-    e.target.id === 'item-search' ||
-    e.target.id === 'quest-search' ||
-    e.target.id === 'hero-search'
-  ) return;
-
+  if (removeEnBtn) { removeEnemy(removeEnBtn.getAttribute('data-enemy-remove')); return; }
+  // Enemy search input
+  if (e.target.id === 'enemy-search') return;
+  // Add Item toggle
+  if (e.target.closest('#add-item-btn')) { toggleItemDropdown(); return; }
+  // Remove item
+  const removeItemBtn = e.target.closest('[data-item-remove]');
+  if (removeItemBtn) { activeItems.splice(parseInt(removeItemBtn.getAttribute('data-item-remove')),1); renderItemList(); return; }
+  if (e.target.id === 'item-search') return;
+  // Add Quest toggle
+  if (e.target.closest('#add-quest-btn')) { toggleQuestDropdown(); return; }
+  // Remove quest
+  const removeQuestBtn = e.target.closest('[data-quest-remove]');
+  if (removeQuestBtn) { activeQuests.splice(parseInt(removeQuestBtn.getAttribute('data-quest-remove')),1); renderQuestList(); return; }
+  // Toggle quest done
+  const questToggle = e.target.closest('[data-quest-toggle]');
+  if (questToggle) { const qi = parseInt(questToggle.getAttribute('data-quest-toggle')); activeQuests[qi].done = !activeQuests[qi].done; renderQuestList(); return; }
+  if (e.target.id === 'quest-search') return;
+  // Close hero dropdown when clicking outside
   const heroWrap = document.querySelector('.add-hero-wrap');
   if (heroWrap && !heroWrap.contains(e.target)) {
     document.getElementById('hero-dropdown').classList.remove('open');
     document.getElementById('add-hero-btn').classList.remove('open');
   }
-
+  // Close enemy dropdown when clicking outside
   const enemyPanel = document.getElementById('enemy-dropdown');
-  const enemyBtn = document.getElementById('add-enemy-btn');
-  if (enemyPanel && !enemyPanel.contains(e.target) && !enemyBtn.contains(e.target)) {
+  const enemyBtn   = document.getElementById('add-enemy-btn');
+  if (enemyPanel && !enemyPanel.contains(e.target) && e.target !== enemyBtn) {
     enemyPanel.classList.remove('open');
-    enemyBtn.style.borderColor = 'var(--gold-dim)';
-  }
-
-  const itemWrap = document.querySelector('.add-item-wrap');
-  if (itemWrap && !itemWrap.contains(e.target)) {
-    document.getElementById('item-dropdown').classList.remove('open');
-    document.getElementById('add-item-btn').classList.remove('open');
-  }
-
-  const questWrap = document.querySelector('.add-quest-wrap');
-  if (questWrap && !questWrap.contains(e.target)) {
-    document.getElementById('quest-dropdown').classList.remove('open');
-    document.getElementById('add-quest-btn').classList.remove('open');
+    if (enemyBtn) enemyBtn.style.borderColor = 'var(--gold-dim)';
   }
 });
 
+// Enemy search filter
 document.addEventListener('input', function(e) {
-  if (e.target.id === 'hero-search') renderHeroOptions(e.target.value);
   if (e.target.id === 'enemy-search') renderEnemyOptions(e.target.value);
-  if (e.target.id === 'item-search') renderItemOptions(e.target.value);
+  if (e.target.id === 'item-search')  renderItemOptions(e.target.value);
   if (e.target.id === 'quest-search') renderQuestOptions(e.target.value);
 });
 
-// ══════ INIT ══════
-renderParty();
-renderHeroOptions();
-renderCycleBar();
-renderTimeline();
+// Initial enemy list render
 renderEnemyList();
-renderHeroItems();
-renderHeroQuests();
+
+// ══════ ITEMS DATA ══════
+const ITEMS = [
+  // Common Items
+  { id:'food',          name:'Food',           type:'Common Item', desc:'Heal Target for 2 HP' },
+  { id:'torch',         name:'Torch',          type:'Common Item', desc:'Grant First turn against an enemy. Removes after battle. Can only be used at night.' },
+  { id:'whetstone',     name:'Whetstone',      type:'Common Item', desc:'Grant Target +2 DMG' },
+  { id:'traverse-item', name:'Traverse Item',  type:'Common Item', desc:'Skips Traverse Action' },
+  { id:'cleanser',      name:'Cleanser',       type:'Common Item', desc:'Removes Debuff' },
+  { id:'tinder-pouch',  name:'Tinder Pouch',   type:'Common Item', desc:'Use to skip 2 turns, then heals full HP' },
+  // Complete Items
+  { id:'t1-boots',      name:'Tier 1 Boots',   type:'Complete Item', desc:'Grant +1 Tile Movement' },
+  { id:'t1-armor',      name:'Tier 1 Armor',   type:'Complete Item', desc:'Grant +1 AC' },
+  { id:'t1-sword',      name:'Tier 1 Sword',   type:'Complete Item', desc:'Grant +2 DMG' },
+  { id:'t1-necklace',   name:'Tier 1 Necklace',type:'Complete Item', desc:'Grant +1 on Dice Roll' },
+  { id:'t2-boots',      name:'Tier 2 Boots',   type:'Complete Item', desc:'Grant +2 Tile Movement' },
+  { id:'t2-armor',      name:'Tier 2 Armor',   type:'Complete Item', desc:'Grant +2 AC' },
+  { id:'t2-sword',      name:'Tier 2 Sword',   type:'Complete Item', desc:'Grant +3 DMG' },
+  { id:'t2-necklace',   name:'Tier 2 Necklace',type:'Complete Item', desc:'Grant +1 Successful Roll 2 Times per Day' },
+];
+
+let activeItems = []; // { id, count }
+
+function renderItemList() {
+  const list = document.getElementById('item-list');
+  list.innerHTML = '';
+  if (!activeItems.length) {
+    list.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">No items added</div>';
+    return;
+  }
+  activeItems.forEach((ai, idx) => {
+    const it = ITEMS.find(x => x.id === ai.id);
+    const isCommon = it.type === 'Common Item';
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.innerHTML = `
+      <div class="item-info">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:2px;">
+          <span class="item-name">${it.name}</span>
+          <span class="${isCommon ? 'badge-common' : 'badge-complete'}">${isCommon ? 'Common' : 'Complete'}</span>
+        </div>
+        <div class="item-desc">${it.desc}</div>
+      </div>
+      <button data-item-remove="${idx}" title="Remove" style="background:none;border:none;color:#7a3020;font-size:13px;cursor:pointer;padding:0 2px;flex-shrink:0;align-self:flex-start;">✕</button>`;
+    list.appendChild(card);
+  });
+}
+
+function renderItemOptions(filter) {
+  const container = document.getElementById('item-options');
+  container.innerHTML = '';
+  const q = (filter || '').toLowerCase();
+  const filtered = ITEMS.filter(it =>
+    it.name.toLowerCase().includes(q) || it.type.toLowerCase().includes(q) || it.desc.toLowerCase().includes(q)
+  );
+  if (!filtered.length) {
+    container.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--text-dim);text-align:center;">No items found</div>';
+    return;
+  }
+  ['Common Item','Complete Item'].forEach(type => {
+    const group = filtered.filter(x => x.type === type);
+    if (!group.length) return;
+    const label = document.createElement('div');
+    label.style.cssText = 'padding:4px 10px 2px;font-family:Cinzel,serif;font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;background:#1a1008;border-bottom:1px solid var(--panel-border);';
+    label.textContent = type;
+    container.appendChild(label);
+    group.forEach(it => {
+      const div = document.createElement('div');
+      div.className = 'hero-option';
+      div.innerHTML = `<div class="hero-opt-info"><div class="hero-opt-name">${it.name}</div><div class="hero-opt-type">${it.desc}</div></div>`;
+      div.addEventListener('click', () => {
+        activeItems.push({ id: it.id });
+        renderItemList();
+        renderItemOptions(document.getElementById('item-search').value);
+        setTimeout(() => { document.getElementById('item-dropdown').classList.remove('open'); }, 250);
+      });
+      container.appendChild(div);
+    });
+  });
+}
+
+function toggleItemDropdown() {
+  const dd = document.getElementById('item-dropdown');
+  const open = dd.classList.toggle('open');
+  if (open) { renderItemOptions(''); document.getElementById('item-search').value = ''; document.getElementById('item-search').focus(); }
+}
+
+renderItemList();
+
+// ══════ QUESTS DATA ══════
+const QUESTS = [
+  { id:'fh-day',   name:'Forest Hunt Quest',              desc:'Hunt and Defeat any monster at Day at any Forest Tile',                                          reward:'10 Points' },
+  { id:'fh-night', name:'Forest Hunt Quest Night',        desc:'Hunt and Defeat any monster at Night at any Forest Tile',                                        reward:'10 Points' },
+  { id:'sh-day',   name:'Swamp Hunt Quest',               desc:'Hunt and Defeat any monster at Day at any Swamp Tile',                                           reward:'10 Points' },
+  { id:'sh-night', name:'Swamp Hunt Quest Night',         desc:'Hunt and Defeat any monster at Night at any Swamp Tile',                                         reward:'10 Points' },
+  { id:'mh-day',   name:'Mountain Hunt Quest',            desc:'Hunt and Defeat any monster at Day at any Mountain Tile',                                        reward:'10 Points' },
+  { id:'mh-night', name:'Mountain Hunt Quest Night',      desc:'Hunt and Defeat any monster at Night at any Mountain Tile',                                      reward:'10 Points' },
+  { id:'fg-day',   name:'Forest Gather Quest',            desc:'Gather Quest Items by rolling a D5–D6 at Day at any Forest Tile',                               reward:'10 Points' },
+  { id:'fg-night', name:'Forest Gather Quest Night',      desc:'Gather Quest Items by rolling a D5–D6 at any Forest Tile at Night',                             reward:'10 Points' },
+  { id:'sg-day',   name:'Swamp Gather Quest',             desc:'Gather Quest Items by rolling a D5–D6 at Day at any Swamp Tile',                                reward:'10 Points' },
+  { id:'sg-night', name:'Swamp Gather Quest Night',       desc:'Gather Quest Items by rolling a D5–D6 at Night at any Swamp Tile',                              reward:'10 Points' },
+  { id:'mg-day',   name:'Mountain Gather Quest',          desc:'Gather Quest Items by Rolling a D5–D6 at Day at any Mountain Tile',                             reward:'10 Points' },
+  { id:'mg-night', name:'Mountain Gather Quest Night',    desc:'Gather Quest Items by Rolling a D5–D6 at Night at any Mountain Tile',                           reward:'10 Points' },
+  { id:'ff-day',   name:'Forest Find Quest',              desc:'Find a Quest item by Rolling a D6 on the same tile Twice at day on any Forest Tile and return back to the same village', reward:'10 Points' },
+  { id:'ff-night', name:'Forest Find Quest Night',        desc:'Find a Quest item by Rolling a D6 on the same tile Twice at night on any Forest Tile and return back to the same village', reward:'10 Points' },
+  { id:'sf-day',   name:'Swamp Find Quest',               desc:'Find a Quest item by Rolling a D6 on the same tile Twice at day on any Swamp Tile and return back to the same village', reward:'10 Points' },
+  { id:'sf-night', name:'Swamp Find Quest Night',         desc:'Find a Quest item by Rolling a D6 on the same tile Twice at night on any Swamp Tile and return back to the same village', reward:'10 Points' },
+  { id:'mf-day',   name:'Mountain Find Quest',            desc:'Find a Quest item by Rolling a D6 on the same tile Twice at day on any Mountain Tile and return back to the same village', reward:'10 Points' },
+  { id:'mf-night', name:'Mountain Find Quest Night',      desc:'Find a Quest Item by Rolling a D6 on the same tile Twice at night on any Mountain Tile and return back to the same village', reward:'10 Points' },
+];
+
+let activeQuests = []; // { id, done }
+
+function renderQuestList() {
+  const list = document.getElementById('quest-list');
+  list.innerHTML = '';
+  if (!activeQuests.length) {
+    list.innerHTML = '<div style="font-size:11px;color:var(--text-dim);text-align:center;padding:8px 0;">No quests added</div>';
+    return;
+  }
+  activeQuests.forEach((aq, idx) => {
+    const q = QUESTS.find(x => x.id === aq.id);
+    const card = document.createElement('div');
+    card.className = 'quest-card' + (aq.done ? ' done' : '');
+    card.innerHTML = `
+      <div class="quest-check ${aq.done ? 'checked' : ''}" data-quest-toggle="${idx}" title="Toggle complete">${aq.done ? '✓' : ''}</div>
+      <div class="quest-info">
+        <div class="quest-name">${q.name}</div>
+        <div class="quest-desc">${q.desc}</div>
+        <div class="quest-reward">🏆 ${q.reward}</div>
+      </div>
+      <button data-quest-remove="${idx}" title="Remove" style="background:none;border:none;color:#7a3020;font-size:13px;cursor:pointer;padding:0 2px;flex-shrink:0;align-self:flex-start;">✕</button>`;
+    list.appendChild(card);
+  });
+}
+
+function renderQuestOptions(filter) {
+  const container = document.getElementById('quest-options');
+  container.innerHTML = '';
+  const q = (filter || '').toLowerCase();
+  // Group by type
+  const GROUPS = [
+    { label:'Hunt Quests',    ids:['fh-day','fh-night','sh-day','sh-night','mh-day','mh-night'] },
+    { label:'Gather Quests',  ids:['fg-day','fg-night','sg-day','sg-night','mg-day','mg-night'] },
+    { label:'Find Quests',    ids:['ff-day','ff-night','sf-day','sf-night','mf-day','mf-night'] },
+  ];
+  let any = false;
+  GROUPS.forEach(g => {
+    const group = QUESTS.filter(x => g.ids.includes(x.id) && (x.name.toLowerCase().includes(q) || x.desc.toLowerCase().includes(q)));
+    if (!group.length) return;
+    any = true;
+    const label = document.createElement('div');
+    label.style.cssText = 'padding:4px 10px 2px;font-family:Cinzel,serif;font-size:9px;letter-spacing:2px;color:#9060d0;text-transform:uppercase;background:#100c18;border-bottom:1px solid #302040;';
+    label.textContent = g.label;
+    container.appendChild(label);
+    group.forEach(quest => {
+      const alreadyAdded = activeQuests.some(x => x.id === quest.id);
+      const div = document.createElement('div');
+      div.className = 'hero-option' + (alreadyAdded ? ' disabled' : '');
+      div.innerHTML = `
+        <div class="hero-opt-info">
+          <div class="hero-opt-name" style="color:#c0a0f0">${quest.name}</div>
+          <div class="hero-opt-type">${quest.reward}</div>
+        </div>
+        ${alreadyAdded ? '<span style="font-size:9px;color:#a070e0;padding:2px 5px;background:#2a1a40;border-radius:2px;">Added</span>' : ''}`;
+      if (!alreadyAdded) {
+        div.addEventListener('click', () => {
+          activeQuests.push({ id: quest.id, done: false });
+          renderQuestList();
+          renderQuestOptions(document.getElementById('quest-search').value);
+          setTimeout(() => { document.getElementById('quest-dropdown').classList.remove('open'); }, 250);
+        });
+      }
+      container.appendChild(div);
+    });
+  });
+  if (!any) container.innerHTML = '<div style="padding:10px;font-size:12px;color:var(--text-dim);text-align:center;">No quests found</div>';
+}
+
+function toggleQuestDropdown() {
+  const dd = document.getElementById('quest-dropdown');
+  const open = dd.classList.toggle('open');
+  if (open) { renderQuestOptions(''); document.getElementById('quest-search').value = ''; document.getElementById('quest-search').focus(); }
+}
+
+renderQuestList();
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+}, {passive:true});
+
+document.addEventListener('touchend', e => {
+  touchEndX = e.changedTouches[0].screenX;
+  const diff = touchEndX - touchStartX;
+
+  if (Math.abs(diff) > 80) {
+    if (diff < 0) {
+      endTurn(); // swipe left
+    }
+  }
+}, {passive:true});
+
 </script>
 </body>
 </html>
